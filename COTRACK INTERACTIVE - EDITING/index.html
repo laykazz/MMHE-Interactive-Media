@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen bg-slate-100 text-slate-800">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MHB CoTrack System Solution</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              canvas: '#F8FAFC',
+              surface: '#FFFFFF',
+              card: '#F1F5F9',
+              border: '#E2E8F0',
+              teal: '#0D9488',
+              cyan: '#0284C7',
+              accent: '#0284C7',
+              success: '#10B981',
+              warning: '#F59E0B',
+              danger: '#EF4444'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'spin-slow': 'spin 12s linear infinite'
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter Sans-Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <!-- Original inline styles extracted to styles.css.
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+
+    /* Technical Grid Pattern for Off-White Background */
+    .bg-tech-grid {
+      background-size: 32px 32px;
+      background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+    }
+
+    .glow-cyan {
+      box-shadow: 0 10px 25px -4px rgba(2, 132, 199, 0.2);
+    }
+
+    .slide-transition {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .tabular-num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Page 4 feature cards consistency */
+    .phone-feature-btn {
+      border-color: #e2e8f0 !important;
+      border-width: 1px !important;
+    }
+
+    /* Lifecycle Diagram Interactive Transitions & SVG Flow */
+    .flow-node, .flow-path, .flow-label {
+      transition: opacity 0.35s ease, filter 0.35s ease, stroke-width 0.25s ease;
+    }
+    .flow-node:hover {
+      filter: drop-shadow(0 4px 8px rgba(2, 132, 199, 0.25));
+    }
+    .flow-node.dimmed, .flow-path.dimmed, .flow-label.dimmed {
+      opacity: 0.14 !important;
+      filter: grayscale(95%) contrast(0.65) !important;
+    }
+    .flow-node.active-step {
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.45)) !important;
+    }
+    .flow-path.active-step {
+      opacity: 1 !important;
+      stroke: #0284c7 !important;
+      stroke-width: 2.2px !important;
+    }
+    .flow-connector-line {
+      stroke-dasharray: 6 4;
+      animation: dashmove 20s linear infinite;
+    }
+    @keyframes dashmove {
+      to {
+        stroke-dashoffset: -100;
+      }
+    }
+
+    html,
+    body {
+      height: 100%;
+      min-height: 0 !important;
+      overflow: hidden;
+    }
+
+    body {
+      height: 100dvh;
+    }
+
+    body > main {
+      flex: 1 1 0%;
+      height: calc(100dvh - 3.5rem);
+      max-height: calc(100dvh - 3.5rem);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    main > div {
+      height: 100%;
+      min-height: 0;
+      max-height: 100%;
+    }
+
+    .slide-transition:not(.hidden) {
+      flex: 1 1 0% !important;
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #slide-2 > .grid {
+      min-height: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #s3-view-1 {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #s3-view-1 > div:last-child {
+      min-height: 0;
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+
+    #slide-3 > [id^="s3-view-"]:not(#s3-view-1) {
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .s3-diagram-zoom-target {
+      transform: none;
+      transform-origin: top left;
+      transition: zoom 0.25s ease;
+    }
+
+    .s3-diagram-zoom-viewport {
+      overflow: auto;
+    }
+
+    @media (max-width: 639px) {
+      main {
+        padding: 0.5rem;
+      }
+    }
+  </style> -->
+</head>
+
+<body class="min-h-screen bg-slate-100 flex flex-col font-sans select-none antialiased text-slate-800">
+
+  <header class="h-14 border-b border-slate-200/90 bg-white/95 backdrop-blur-md px-6 flex items-center justify-between z-30 shrink-0 shadow-sm">
+    <div class="flex items-center space-x-3">
+      <!-- MHB Brand Identity -->
+      <div class="flex items-center space-x-2.5">
+	<img src="Logo.jpg" alt="MHB logo" class="h-8 w-auto rounded-lg shadow-sm">
+        <span class="text-sm font-semibold tracking-tight text-slate-800">
+          Malaysia Marine and Heavy Engineering
+        </span>
+      </div>
+    </div>
+
+    <!-- Active Pitch Deck Status -->
+    <div class="flex items-center space-x-4">
+      <div class="text-xs text-slate-500 font-semibold flex items-center gap-2">
+        <span id="slideCounterText" class="text-sky-700 font-bold tabular-num tracking-wide">01 / 06</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 min-h-0 relative flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-auto bg-tech-grid">
+    
+    <!-- Presentation Container with 16:9 Constraint -->
+    <div id="deckContainer" class="w-[1240px] h-[630px] min-w-[1240px] min-h-[630px] max-w-none max-h-none shrink-0 bg-slate-50/95 border border-slate-200/90 rounded-2xl shadow-xl relative overflow-hidden flex flex-col backdrop-blur-xl">
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 1: COVER & MISSION -->
+      <!-- ======================================================== -->
+      <section id="slide-1" class="slide-transition w-full flex-1 min-h-0 flex flex-col justify-between p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-teal-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-4xl z-10 my-auto py-2">
+          <div class="text-xs uppercase tracking-wider text-teal-700 font-semibold mb-1">Project Completion &amp; Tracking System</div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-none mb-5">
+            MHB <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-teal-600 to-emerald-600">CoTrack</span> Solution
+          </h1>
+          <p class="text-base sm:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mb-6">
+            Meet our in-house developed computerized system designed to monitor project execution from engineering processes until commissioning and handover
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2 text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-3xl mb-8">
+            <span class="font-medium tracking-tight text-slate-800">Single Source of Truth</span>
+            <span class="text-slate-300">●</span>
+            <span class="font-medium tracking-tight text-slate-800">Real-Time Visibility</span>
+            <span class="text-slate-300">●</span>
+            <span class="font-medium tracking-tight text-slate-800">End-to-End Traceability</span>
+            <span class="text-slate-300">●</span>
+            <span class="font-medium tracking-tight text-slate-800">Faster Project Delivery</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button onclick="goToSlide(2)" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-500 hover:to-teal-500 text-white font-semibold text-sm shadow-md shadow-sky-600/20 flex items-center gap-2 group transition-all">
+              <span>Explore CoTrack</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <a href="https://youtu.be/RtoFKivrMlU" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-medium text-sm transition shadow-sm inline-flex items-center gap-2">
+              <svg class="w-5 h-5 fill-[#FF0000] shrink-0" viewBox="0 0 24 24">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+              Video Demo
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 2: THE CORE ECOSYSTEM (HUB & SPOKE MODEL) -->
+      <!-- ======================================================== -->
+      <section id="slide-2" class="slide-transition hidden w-full flex-1 min-h-0 flex flex-col justify-center items-center p-4 sm:p-6 lg:p-7 relative overflow-hidden">
+        <div class="w-full my-auto flex flex-col justify-center">
+          <div class="text-left mb-3 shrink-0">
+            <div class="text-xs font-semibold text-teal-700 uppercase tracking-wider mb-1">Modular Platform Architecture</div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">The CoTrack Integrated Ecosystem</h2>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 w-full items-center justify-center">
+          
+          <!-- Element: Data Transfer to CoTrack (Left: Slim 2 Cols) -->
+          <div class="lg:col-span-3 flex flex-col justify-center h-full max-h-[550px]">
+            <div class="bg-white/95 border border-slate-200/90 rounded-2xl p-2.5 sm:p-3 shadow-sm flex flex-col justify-between h-full">
+              <div class="border-b border-slate-100 pb-1.5 shrink-0">
+                <h4 class="text-s font-bold text-slate-900 tracking-tight">Data transfer to CoTrack</h4>
+              </div>
+
+              <div class="space-y-2.5 flex-1 flex flex-col justify-between py-2.5">
+
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="Tekla.png" alt="Tekla" class="w-12 h-8 rounded object-contain shrink-0" />
+        	  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">
+  			3D Structural Design & Detailing
+		  </span>
+      		</div>
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="Aveva 3D.jpg" alt="AVEVA 3D" class="w-15 h-8 rounded object-contain shrink-0" />
+                  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">Piping & Plant Model & Data</span>
+                </div>
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="SAP.png" alt="SAP" class="w-15 h-8 rounded object-contain shrink-0" />
+                  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">Procurement & Material Data</span>
+                </div>
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="Primavera.png" alt="Primavera" class="w-12 h-8 rounded object-contain shrink-0" />
+                  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">Project Schedule Integration</span>
+                </div>
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="Aveva Bocad.jpg" alt="Bocad" class="w-12 h-8 rounded object-contain shrink-0" />
+                  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">Structure Design & Detailing</span>
+                </div>
+                <div class="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center gap-2">
+        	  <img src="Autodesk.png" alt="Autodesk" class="w-12 h-8 rounded object-contain shrink-0" />
+                  <span class="text-[11px] font-normal text-slate-800 whitespace-normal leading-tight">Design & Engineering Data</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Circular Integrated Orbital Canvas (Middle: 5 Cols) -->
+          <div class="lg:col-span-5 flex flex-col items-center justify-center relative select-none">
+            <div class="relative w-[320px] h-[320px] sm:w-[370px] sm:h-[370px] lg:w-[415px] lg:h-[415px] flex items-center justify-center">
+              <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 500 500">
+                <defs>
+                  <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0284C7" stop-opacity="0.35" />
+                    <stop offset="50%" stop-color="#0D9488" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#6366F1" stop-opacity="0.35" />
+                  </linearGradient>
+                </defs>
+
+                <circle cx="250" cy="250" r="185" fill="none" stroke="url(#orbitGrad)" stroke-width="2" stroke-dasharray="6,5" class="animate-spin-slow origin-center" />
+                <circle cx="250" cy="250" r="185" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-opacity="0.4" />
+                <circle cx="250" cy="250" r="105" fill="none" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,3" />
+
+                <line id="spoke-edas" x1="250" y1="250" x2="250" y2="65" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-sap" x1="250" y1="250" x2="381" y2="119" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-ematrack_pms" x1="250" y1="250" x2="435" y2="250" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-spmanager" x1="250" y1="250" x2="381" y2="381" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-cppt" x1="250" y1="250" x2="250" y2="435" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-ocms" x1="250" y1="250" x2="119" y2="381" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-edms" x1="250" y1="250" x2="65" y2="250" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+                <line id="spoke-sms" x1="250" y1="250" x2="119" y2="119" stroke="#CBD5E1" stroke-width="1.2" stroke-opacity="0.45" class="transition-all duration-300" />
+              </svg>
+
+              <!-- Central Core Bubble (Enlarged) -->
+              <div class="relative z-10 w-24 h-24 sm:w-28 sm:h-28 lg:w-[114px] lg:h-[114px] rounded-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white p-2.5 flex flex-col items-center justify-center text-center shadow-2xl border-4 border-white glow-cyan group cursor-pointer transition-transform duration-300 hover:scale-105">
+                <div class="text-[9px] sm:text-[10px] font-extrabold text-sky-400 uppercase tracking-widest leading-tight">MHB</div>
+                <div class="text-[11px] sm:text-[12px] font-black tracking-tight leading-tight text-white my-0.5">CoTrack Solution</div>
+                <div class="text-[7.5px] sm:text-[8.5px] font-bold text-teal-300 bg-teal-950/80 border border-teal-500/40 px-2 py-0.5 rounded-full tracking-wide">
+                  4D/5D BIM
+                </div>
+              </div>
+
+              <!-- 8 Circular Module Nodes (Enlarged) -->
+              <button onclick="selectModule('edas')" id="node-edas" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 50%; top: 13%;">
+  <span class="text-[8.5px] font-extrabold text-sky-600 tracking-wider">01</span>
+  <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-sky-600 transition-colors">EDAS</span>
+  <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Fabrication Eng.</span>
+</button>
+
+              <button onclick="selectModule('sap')" id="node-sap" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 76.2%; top: 23.8%;">
+                <span class="text-[8.5px] font-extrabold text-blue-600 tracking-wider">02</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">SAP</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Procurement</span>
+              </button>
+
+              <button onclick="selectModule('ematrack_pms')" id="node-ematrack_pms" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 87%; top: 50%;">
+                <span class="text-[8.5px] font-extrabold text-teal-600 tracking-wider">03</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-teal-600 transition-colors">eMaTrack</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Material Mgmt.</span>
+              </button>
+
+              <button onclick="selectModule('spmanager')" id="node-spmanager" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 76.2%; top: 76.2%;">
+                <span class="text-[8.5px] font-extrabold text-cyan-600 tracking-wider">04</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-cyan-600 transition-colors">SPManager</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Fab &amp; Install</span>
+              </button>
+
+              <button onclick="selectModule('cppt')" id="node-cppt" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 50%; top: 87%;">
+                <span class="text-[8.5px] font-extrabold text-emerald-600 tracking-wider">05</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">CPPT</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">QC &amp; Progress</span>
+              </button>
+
+              <button onclick="selectModule('ocms')" id="node-ocms" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 23.8%; top: 76.2%;">
+                <span class="text-[8.5px] font-extrabold text-amber-600 tracking-wider">06</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-amber-600 transition-colors">OCMS</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Commissioning</span>
+              </button>
+
+              <button onclick="selectModule('edms')" id="node-edms" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 13%; top: 50%;">
+                <span class="text-[8.5px] font-extrabold text-indigo-600 tracking-wider">07</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">EDMS</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Documentation</span>
+              </button>
+
+              <button onclick="selectModule('sms')" id="node-sms" class="module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105 hover:opacity-100 hover:border-slate-400 active:scale-95 p-1" style="left: 23.8%; top: 23.8%;">
+                <span class="text-[8.5px] font-extrabold text-purple-600 tracking-wider">08</span>
+                <span class="text-[11px] sm:text-xs font-bold text-slate-900 group-hover:text-purple-600 transition-colors">SMS</span>
+                <span class="text-[7.5px] sm:text-[8px] text-slate-500 font-medium leading-tight px-0.5">Shiploose</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Detail Focus Panel (Right: 5 Cols) -->
+          <div class="lg:col-span-4 flex items-center justify-center w-full">
+            <div class="w-full max-w-xl min-h-[380px] sm:min-h-[410px] bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-md">
+              <div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2.5">
+                  <div class="flex items-center gap-2">
+                    <span id="mod-icon-tag" class="w-3 h-3 rounded-full bg-sky-500 ring-4 ring-sky-100"></span>
+                    <span id="mod-code" class="text-sm font-extrabold text-sky-700 uppercase tracking-wider">EDAS</span>
+                  </div>
+                </div>
+
+                <h3 id="mod-title" class="text-sm sm:text-base font-bold text-slate-900 mb-1">Engineering Design Database System</h3>
+                <p id="mod-desc" class="text-[11px] text-slate-600 leading-relaxed mb-3">
+                  A central database to capture and update engineering data which include tag and other attribute, drawing information & datasheets. Source data for integration for e-Matrack, PMS, CPPT, OCMS and SMS.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                  <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col">
+                    <div class="text-[9px] font-black uppercase tracking-wider text-slate-500 mb-1 pb-1 border-b border-slate-200">
+                      STAKEHOLDERS
+                    </div>
+                    <ul id="mod-who-list" class="space-y-1 text-[10px] text-slate-700 font-medium leading-snug"></ul>
+                  </div>
+
+                  <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col">
+                    <div class="text-[9px] font-black uppercase tracking-wider text-slate-500 mb-1 pb-1 border-b border-slate-200">
+                      WHAT IT DELIVERS
+                    </div>
+                    <ul id="mod-delivers-list" class="space-y-1 text-[10px] text-slate-700 font-medium leading-snug"></ul>
+                  </div>
+
+                  <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col">
+                    <div class="text-[9px] font-black uppercase tracking-wider text-slate-500 mb-1 pb-1 border-b border-slate-200">
+                      BUSINESS VALUE
+                    </div>
+                    <ul id="mod-value-list" class="space-y-1 text-[10px] text-slate-700 font-medium leading-snug"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 3: INTERACTIVE EXECUTION ARCHITECTURE & WORKFLOWS -->
+      <!-- ======================================================== -->
+      <section id="slide-3" class="slide-transition hidden w-full flex-1 min-h-0 flex flex-col p-2.5 sm:p-4 lg:p-5 relative overflow-hidden bg-slate-50/80 justify-between">
+        
+        <!-- Workflow Sub-Navigation Header with 3 Tabs -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 shrink-0 border-b border-slate-200/80 pb-2">
+          <div class="flex items-center gap-3">
+            <h2 id="s3-workflow-title" class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Project Execution Life Cycle
+            </h2>
+          </div>
+
+          <!-- Page 3 view controls and workflow tabs -->
+          <div class="flex items-center gap-2">
+            <div id="s3-zoom-controls" class="inline-flex items-center rounded-xl p-1 bg-white border border-slate-200/90 shadow-sm transition-all">
+              <button id="s3-zoom-out-btn" onclick="changeActiveSlide3DiagramZoom(-0.12)" class="w-7 h-7 rounded-lg text-sm font-black text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all" title="Zoom out" aria-label="Zoom out">−</button>
+              <span id="s3-zoom-label" class="min-w-[42px] text-center text-[10px] font-bold text-slate-500">100%</span>
+              <button id="s3-zoom-in-btn" onclick="changeActiveSlide3DiagramZoom(0.12)" class="w-7 h-7 rounded-lg text-sm font-black text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all" title="Zoom in" aria-label="Zoom in">+</button>
+            </div>
+
+            <!-- 3 Workflow Tabs -->
+            <div class="inline-flex rounded-xl p-1 bg-white border border-slate-200/90 shadow-sm">
+              <button id="s3-tab-btn-1" onclick="switchSlide3Workflow(1)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-sm transition-all flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/20 text-white text-[10px] font-bold flex items-center justify-center">1</span>
+                <span>Project Execution Life Cycle</span>
+              </button>
+              <button id="s3-tab-btn-2" onclick="switchSlide3Workflow(2)" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold flex items-center justify-center">2</span>
+                <span>CPT Workflow</span>
+              </button>
+              <button id="s3-tab-btn-3" onclick="switchSlide3Workflow(3)" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold flex items-center justify-center">3</span>
+                <span>CPT Integrated Process Flow</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 1 VIEW: INTERACTIVE PROJECT EXECUTION LIFE CYCLE -->
+        <!-- ============================================== -->
+        <div id="s3-view-1" class="flex-1 min-h-0 flex flex-col justify-between my-1 overflow-hidden">
+          <div class="flex items-center justify-between py-1 px-1 shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold text-slate-700">Lifecycle Stream:</span>
+             <div class="inline-flex rounded-lg p-0.5 bg-white border border-slate-200 shadow-sm text-[10px]">
+  <button onclick="filterLifecycleStream('all')" id="flt-all" class="stream-flt-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white hover:text-slate-900 transition-all">Full Flowchart</button>
+  <button onclick="filterLifecycleStream('eng')" id="flt-eng" class="stream-flt-btn px-2 py-0.5 rounded font-medium text-slate-600 hover:text-slate-900 transition-all">Engineering &amp; Planning</button>
+  <button onclick="filterLifecycleStream('scm')" id="flt-scm" class="stream-flt-btn px-2 py-0.5 rounded font-medium text-slate-600 hover:text-slate-900 transition-all">Procurement &amp; SCM</button>
+  <button onclick="filterLifecycleStream('site')" id="flt-site" class="stream-flt-btn px-2 py-0.5 rounded font-medium text-slate-600 hover:text-slate-900 transition-all">Site &amp; OCMS</button>
+  <button onclick="filterLifecycleStream('sms')" id="flt-sms" class="stream-flt-btn px-2 py-0.5 rounded font-medium text-slate-600 hover:text-slate-900 transition-all">Shiploose (SMS)</button>
+</div>
+            </div>
+            <!-- Dynamic stream status indicator badge -->
+            <div id="lifecycle-filter-status" class="text-[10px] font-semibold text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded-md flex items-center gap-1.5 transition-all">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+              <span id="lifecycle-filter-label">Full Flowchart (21 Nodes Active)</span>
+            </div>
+          </div>
+
+          <!-- Flowchart Canvas -->
+          <div class="flex-1 min-h-0 bg-white/95 rounded-2xl border border-slate-200/90 shadow-sm p-1.5 sm:p-2 relative overflow-y-auto overflow-x-auto">
+            <svg id="lifecycle-svg" class="w-[1180px] h-[580px] mx-auto select-none block" viewBox="0 0 1180 580" style="text-rendering: geometricPrecision; shape-rendering: geometricPrecision;">
+              <defs>
+                <marker id="m-purple" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#581c87"/>
+                </marker>
+                <marker id="m-blue" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+                </marker>
+                <marker id="m-green" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16a34a"/>
+                </marker>
+                <marker id="m-slate" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569"/>
+                </marker>
+              </defs>
+
+              <!-- Container 1 -->
+              <rect x="20" y="15" width="730" height="300" rx="20" fill="#F1F0FB" stroke="#D3CEF7" stroke-width="1.2"/>
+              <g transform="translate(35, 25)">
+                <rect x="0" y="0" width="20" height="20" rx="4" fill="#4f46e5"/>
+                <path d="M 6 6 L 14 6 M 6 10 L 14 10 M 6 14 L 11 14" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <text x="28" y="14" fill="#1e1b4b" font-size="11" font-weight="900" font-family="Inter, sans-serif">Planning, Project Management, Construction, Installation &amp; QC Inspection (CPDT / CPT)</text>
+              </g>
+
+              <!-- Container 2 -->
+              <rect x="765" y="15" width="395" height="115" rx="20" fill="#F2FAEE" stroke="#BCEEB7" stroke-width="1.2"/>
+              <g transform="translate(778, 25)">
+                <rect x="0" y="0" width="20" height="20" rx="4" fill="#16a34a"/>
+                <circle cx="10" cy="10" r="5" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+                <text x="28" y="14" fill="#14532d" font-size="10.5" font-weight="900" font-family="Inter, sans-serif">Mechanical Completion, Pre-Commissioning (OCMS)</text>
+              </g>
+
+              <!-- Container 3 -->
+              <rect x="20" y="235" width="280" height="325" rx="20" fill="#EDF7FF" stroke="#BAE0FF" stroke-width="1.2"/>
+              <g transform="translate(122, 246)">
+                <rect x="0" y="0" width="20" height="20" rx="4" fill="#0284c7"/>
+                <path d="M 5 15 L 10 5 L 15 15" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <text x="26" y="11" fill="#0c4a6e" font-size="9.5" font-weight="900" font-family="Inter, sans-serif">Engineering Data &amp; Drawing</text>
+                <text x="26" y="21" fill="#0284c7" font-size="8" font-weight="800" font-family="Inter, sans-serif">(EDAS &amp; Eng. Tools)</text>
+              </g>
+
+              <!-- Container 4 -->
+              <rect x="225" y="340" width="385" height="220" rx="20" fill="#EDF7FF" stroke="#BAE0FF" stroke-width="1.2"/>
+              <g transform="translate(238, 350)">
+                <rect x="0" y="0" width="18" height="18" rx="4" fill="#2563eb"/>
+                <circle cx="5" cy="13" r="1.8" fill="#ffffff"/><circle cx="13" cy="13" r="1.8" fill="#ffffff"/>
+                <path d="M 2 3 L 5 3 L 7 10 L 15 10 L 16 5 L 5 5" stroke="#ffffff" stroke-width="1.4" fill="none"/>
+                <text x="24" y="13" fill="#1e3a8a" font-size="9.5" font-weight="900" font-family="Inter, sans-serif">Purchasing &amp; Receiving (SAP, Expediting Module, CT7)</text>
+              </g>
+
+              <!-- Container 5 -->
+              <rect x="630" y="352" width="125" height="160" rx="18" fill="#F5EFFB" stroke="#DAC6EE" stroke-width="1.2"/>
+              <g transform="translate(638, 362)">
+                <rect x="0" y="0" width="16" height="16" rx="3" fill="#7e22ce"/>
+                <path d="M 8 2.5 L 13 5 L 13 9.5 Q 13 13 8 15 Q 3 13 3 9.5 L 3 5 Z" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+                <text x="22" y="12" fill="#581c87" font-size="8.5" font-weight="900" font-family="Inter, sans-serif">Preservation (PMS)</text>
+              </g>
+
+              <!-- Container 6 -->
+              <rect x="770" y="340" width="390" height="220" rx="20" fill="#EDF7FF" stroke="#BAE0FF" stroke-width="1.2"/>
+              <g transform="translate(782, 350)">
+                <rect x="0" y="0" width="18" height="18" rx="4" fill="#0369a1"/>
+                <path d="M 3 11 L 15 11 L 12 15 L 6 15 Z" fill="#ffffff"/>
+                <text x="25" y="13" fill="#0c4a6e" font-size="9.8" font-weight="900" font-family="Inter, sans-serif">Shiploose Management &amp; Tracking (SMS)</text>
+              </g>
+
+              <!-- Core Paths -->
+              <path id="fp-contract_to_cad" class="flow-path" d="M 82 165 L 82 280" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-cad_to_planning" class="flow-path" d="M 105 280 L 105 200 L 360 200 L 360 142" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-p6" class="flow-path" d="M 225 115 L 330 115" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-actual_prog_fwd" class="flow-path" d="M 450 110 L 540 110" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-actual_prog_rev" class="flow-path" d="M 540 120 L 450 120" fill="none" stroke="#581c87" stroke-width="1.1" stroke-dasharray="3,3" marker-end="url(#m-purple)"/>
+              <path id="fp-work_orders" class="flow-path" d="M 602 142 L 602 230" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-released_work" class="flow-path" d="M 675 260 L 760 260" fill="none" stroke="#581c87" stroke-width="1.4" marker-end="url(#m-purple)"/>
+              <path id="fp-dwg_to_workfront" class="flow-path" d="M 270 306 L 460 306 L 460 260 L 525 260" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-cad_to_dwg" class="flow-path" d="M 130 306 L 165 306" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-cad_to_mto" class="flow-path" d="M 82 332 L 82 375" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-mto_to_db" class="flow-path" d="M 82 427 L 82 480" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-mto_to_req" class="flow-path" d="M 140 401 L 210 401 L 210 421 L 245 421" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-req_to_po" class="flow-path" d="M 350 421 L 375 421" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-po_to_rec" class="flow-path" d="M 465 421 L 495 421" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-finance_to_po" class="flow-path" d="M 350 500 L 420 500 L 420 447" fill="none" stroke="#475569" stroke-width="1.1" stroke-dasharray="4,3" marker-end="url(#m-slate)"/>
+              <path id="fp-po_to_exp" class="flow-path" d="M 440 447 L 440 500 L 480 500" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-exp_to_rec" class="flow-path" d="M 537 475 L 537 447" fill="none" stroke="#0284c7" stroke-width="1.3" marker-end="url(#m-blue)"/>
+              <path id="fp-rec_to_workfront" class="flow-path" d="M 537 395 L 537 288" fill="none" stroke="#581c87" stroke-width="1.4" marker-end="url(#m-purple)"/>
+              <path id="fp-rec_to_pms" class="flow-path" d="M 580 412 L 642 412" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-pms_to_rec" class="flow-path" d="M 642 432 L 580 432" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-sms_to_cog" class="flow-path" d="M 894 429 L 925 429" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-cog_to_truck" class="flow-path" d="M 960 453 L 960 468 L 850 468 L 850 480" fill="none" stroke="#581c87" stroke-width="1.3" marker-end="url(#m-purple)"/>
+              <path id="fp-truck_to_ship" class="flow-path" d="M 907 505 L 980 505" fill="none" stroke="#581c87" stroke-width="1.4" marker-end="url(#m-purple)"/>
+              <path id="fp-rig_to_ocms" class="flow-path" d="M 825 160 L 825 107" fill="none" stroke="#581c87" stroke-width="1.4" marker-end="url(#m-purple)"/>
+              <path id="fp-ocms_to_handover" class="flow-path" d="M 1025 81 L 1080 81 L 1080 255 L 1060 255" fill="none" stroke="#16a34a" stroke-width="1.4" marker-end="url(#m-green)"/>
+              <path id="fp-rig_to_handover" class="flow-path" d="M 860 240 L 920 240" fill="none" stroke="#581c87" stroke-width="1.4" marker-end="url(#m-purple)"/>
+              <path id="fp-db_to_sms" class="flow-path" d="M 140 507 L 180 507 L 180 542 L 762 542 L 762 429 L 782 429" fill="none" stroke="#475569" stroke-width="1.1" stroke-dasharray="5,4" marker-end="url(#m-slate)"/>
+
+              <!-- Flow Nodes -->
+              <g id="fn-spec-p6" data-node="spec_p6" class="flow-node cursor-pointer">
+                <rect x="42" y="65" width="183" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.06))"/>
+                <g transform="translate(52, 74)">
+                  <rect x="0" y="0" width="58" height="66" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+                  <text x="7" y="12" fill="#94a3b8" font-size="6.5" font-weight="900" letter-spacing="0.8">CONTRACT</text>
+                  <rect x="7" y="17" width="44" height="34" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+                  <path d="M 13 25 L 43 25 M 13 32 L 43 32 M 13 39 L 29 39" stroke="#0284c7" stroke-width="1.4" stroke-linecap="round"/>
+                  <text x="29" y="81" text-anchor="middle" fill="#0f172a" font-size="8.5" font-weight="800">Specification</text>
+                </g>
+                <line x1="118" y1="75" x2="118" y2="155" stroke="#f1f5f9" stroke-width="1.5"/>
+                <g transform="translate(125, 82)">
+                  <rect x="0" y="0" width="90" height="54" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+                  <text x="45" y="21" text-anchor="middle" fill="#dc2626" font-size="8.5" font-weight="900" letter-spacing="0.5">ORACLE</text>
+                  <text x="45" y="39" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="900">PRIMAVERA</text>
+                </g>
+              </g>
+
+              <g id="fn-planning" data-node="planning" class="flow-node cursor-pointer">
+                <rect x="330" y="88" width="120" height="54" rx="10" fill="#FFFBEA" stroke="#F59E0B" stroke-width="2"/>
+                <rect x="338" y="98" width="22" height="22" rx="4" fill="#f59e0b"/>
+                <rect x="343" y="104" width="12" height="10" fill="#ffffff" rx="1"/>
+                <line x1="346" y1="102" x2="346" y2="105" stroke="#ffffff" stroke-width="1.5"/>
+                <line x1="352" y1="102" x2="352" y2="105" stroke="#ffffff" stroke-width="1.5"/>
+                <text x="366" y="107" fill="#0f172a" font-size="8.8" font-weight="900">Details Project</text>
+                <text x="366" y="119" fill="#0f172a" font-size="8.8" font-weight="900">Planning</text>
+                <text x="366" y="131" fill="#b45309" font-size="8" font-weight="700">(L4/L5/L6)</text>
+              </g>
+
+              <g id="fn-progress_measure" data-node="progress_measure" class="flow-node cursor-pointer">
+                <rect x="540" y="88" width="125" height="54" rx="10" fill="#FFFBEA" stroke="#F59E0B" stroke-width="2"/>
+                <rect x="548" y="98" width="22" height="22" rx="4" fill="#d97706"/>
+                <path d="M 554 114 L 554 110 M 559 114 L 559 105 M 564 114 L 564 102" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                <text x="575" y="107" fill="#0f172a" font-size="8.5" font-weight="900">Construction</text>
+                <text x="575" y="119" fill="#0f172a" font-size="8.5" font-weight="900">Progress</text>
+                <text x="575" y="131" fill="#0f172a" font-size="8.5" font-weight="900">Measurement</text>
+              </g>
+
+              <g id="fn-workfront" data-node="workfront" class="flow-node cursor-pointer">
+                <rect x="525" y="230" width="150" height="58" rx="10" fill="#FFFBEA" stroke="#F59E0B" stroke-width="2"/>
+                <text x="600" y="258" text-anchor="middle" fill="#0f172a" font-size="9.5" font-weight="900">Workfront and</text>
+                <text x="600" y="271" text-anchor="middle" fill="#0f172a" font-size="9.5" font-weight="900">Work Package</text>
+              </g>
+
+              <g id="fn-site" data-node="site" class="flow-node cursor-pointer" transform="translate(760, 160)">
+                <path d="M 45 10 L 45 40 M 35 40 L 45 10 L 55 40 M 28 40 L 62 40" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M 58 20 L 78 35 L 45 35" stroke="#d97706" stroke-width="2" fill="none"/>
+                <rect x="25" y="40" width="45" height="18" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                <line x1="30" y1="58" x2="30" y2="88" stroke="#0f172a" stroke-width="3"/>
+                <line x1="47" y1="58" x2="47" y2="88" stroke="#0f172a" stroke-width="3"/>
+                <line x1="64" y1="58" x2="64" y2="88" stroke="#0f172a" stroke-width="3"/>
+                <path d="M 30 63 L 64 82 M 64 63 L 30 82" stroke="#475569" stroke-width="1.8"/>
+                <path d="M 15 90 Q 30 86 45 90 T 75 90 T 100 90" stroke="#38bdf8" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <text x="47" y="106" text-anchor="middle" fill="#0f172a" font-size="10.5" font-weight="900">Construction</text>
+                <text x="47" y="118" text-anchor="middle" fill="#0284c7" font-size="10.5" font-weight="900">@ site</text>
+              </g>
+
+              <g id="fn-ocms" data-node="ocms" class="flow-node cursor-pointer">
+                <rect x="785" y="55" width="240" height="52" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.6"/>
+                <rect x="795" y="67" width="24" height="26" rx="4" fill="#dcfce7" stroke="#22c55e"/>
+                <path d="M 801 80 L 805 84 L 813 75" stroke="#16a34a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <text x="828" y="79" fill="#0f172a" font-size="9.5" font-weight="900">MC, Pre-Commissioning</text>
+                <text x="828" y="93" fill="#15803d" font-size="9" font-weight="800">control</text>
+              </g>
+
+              <g id="fn-handover" data-node="handover" class="flow-node cursor-pointer">
+                <rect x="920" y="170" width="140" height="140" rx="14" fill="#362C64" stroke="#50418A" stroke-width="1.4"/>
+                <rect x="930" y="180" width="20" height="20" rx="4" fill="#6366f1"/>
+                <path d="M 934 191 Q 940 185 946 191" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+                <text x="958" y="195" fill="#ffffff" font-size="11" font-weight="900">Hand Over</text>
+                <line x1="930" y1="210" x2="1050" y2="210" stroke="#6366f1" stroke-dasharray="3,3"/>
+                <text x="990" y="222" text-anchor="middle" fill="#c7d2fe" font-size="8.5" font-weight="800">Signed Off ITRs</text>
+                <rect x="935" y="235" width="110" height="60" rx="8" fill="#FFF9DB" stroke="#F59E0B" stroke-width="1.4"/>
+                <rect x="945" y="247" width="22" height="26" rx="3" fill="#f59e0b"/>
+                <path d="M 950 255 L 960 255 M 950 261 L 960 261" stroke="#ffffff" stroke-width="1.6"/>
+                <text x="975" y="262" fill="#0f172a" font-size="10.5" font-weight="900">Final</text>
+                <text x="975" y="275" fill="#0f172a" font-size="10.5" font-weight="900">Doc</text>
+              </g>
+
+              <g id="fn-cad" data-node="cad" class="flow-node cursor-pointer">
+                <rect x="35" y="280" width="95" height="52" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <rect x="42" y="293" width="22" height="22" rx="4" fill="#e0f2fe"/>
+                <rect x="46" y="298" width="14" height="10" fill="#0284c7" rx="1"/>
+                <text x="70" y="302" fill="#0f172a" font-size="9" font-weight="900">2D/3D</text>
+                <text x="70" y="315" fill="#0f172a" font-size="9" font-weight="900">Drawing</text>
+              </g>
+
+              <g id="fn-dwg_mgmt" data-node="dwg_mgmt" class="flow-node cursor-pointer">
+                <rect x="165" y="280" width="105" height="52" rx="8" fill="#DC2626" stroke="#b91c1c" stroke-width="1.2"/>
+                <g transform="translate(173, 296)">
+                  <path d="M 0 0 L 8 0 L 11 4 L 22 4 L 22 17 L 0 17 Z" fill="#ffffff" opacity="0.9"/>
+                </g>
+                <text x="202" y="304" fill="#ffffff" font-size="9" font-weight="900">Drawing</text>
+                <text x="202" y="316" fill="#ffffff" font-size="9" font-weight="900">Mgmt.</text>
+              </g>
+
+              <g id="fn-mat_cat" data-node="mat_cat" class="flow-node cursor-pointer">
+                <rect x="35" y="375" width="105" height="52" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <rect x="42" y="387" width="22" height="22" rx="4" fill="#e0f2fe"/>
+                <path d="M 47 394 L 58 394 M 47 399 L 58 399 M 47 404 L 54 404" stroke="#0284c7" stroke-width="1.6"/>
+                <text x="70" y="398" fill="#0f172a" font-size="8.8" font-weight="900">Material</text>
+                <text x="70" y="411" fill="#0f172a" font-size="8.8" font-weight="900">Catalogue</text>
+              </g>
+
+              <g id="fn-eng_db" data-node="eng_db" class="flow-node cursor-pointer">
+                <rect x="35" y="480" width="105" height="54" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <ellipse cx="50" cy="495" rx="8" ry="3" fill="#0284c7"/>
+                <path d="M 42 495 L 42 509 Q 50 513 58 509 L 58 495" fill="#0284c7"/>
+                <text x="66" y="504" fill="#0f172a" font-size="8.5" font-weight="900">Engineering</text>
+                <text x="66" y="517" fill="#0f172a" font-size="8.5" font-weight="900">Database</text>
+              </g>
+
+              <g id="fn-req" data-node="req" class="flow-node cursor-pointer">
+                <rect x="245" y="395" width="105" height="52" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.4"/>
+                <rect x="252" y="407" width="18" height="20" rx="3" fill="#dbeafe"/>
+                <path d="M 256 414 L 259 417 L 266 410" stroke="#2563eb" stroke-width="1.6" fill="none"/>
+                <text x="275" y="426" fill="#0f172a" font-size="8.2" font-weight="900">Requisitioning</text>
+              </g>
+
+              <g id="fn-po" data-node="po" class="flow-node cursor-pointer">
+                <rect x="375" y="395" width="90" height="52" rx="8" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.4"/>
+                <rect x="383" y="408" width="18" height="18" rx="3" fill="#2563eb"/>
+                <text x="406" y="425" fill="#0f172a" font-size="8.8" font-weight="900">Purchasing</text>
+              </g>
+
+              <g id="fn-rec" data-node="rec" class="flow-node cursor-pointer">
+                <rect x="495" y="395" width="85" height="52" rx="8" fill="#ffffff" stroke="#86efac" stroke-width="1.4"/>
+                <rect x="502" y="408" width="18" height="18" rx="3" fill="#16a34a"/>
+                <path d="M 507 417 L 511 421 L 516 414" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+                <text x="525" y="425" fill="#0f172a" font-size="8.8" font-weight="900">Receiving</text>
+              </g>
+
+              <g id="fn-finance" data-node="finance" class="flow-node cursor-pointer">
+                <rect x="245" y="475" width="105" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+                <circle cx="260" cy="500" r="9" fill="#f1f5f9" stroke="#94a3b8"/>
+                <text x="257" y="504" fill="#0f172a" font-size="10" font-weight="900">$</text>
+                <text x="274" y="497" fill="#0f172a" font-size="8.5" font-weight="800">Financial</text>
+                <text x="274" y="510" fill="#0f172a" font-size="8.5" font-weight="800">Systems</text>
+              </g>
+
+              <g id="fn-expediting" data-node="expediting" class="flow-node cursor-pointer">
+                <rect x="480" y="475" width="100" height="50" rx="8" fill="#ffffff" stroke="#fcd34d" stroke-width="1.4"/>
+                <circle cx="495" cy="500" r="8" fill="#fef3c7" stroke="#f59e0b"/>
+                <path d="M 495 496 L 495 500 L 499 500" stroke="#b45309" stroke-width="1.5" fill="none"/>
+                <text x="509" y="504" fill="#0f172a" font-size="8.8" font-weight="900">Expediting</text>
+              </g>
+
+              <g id="fn-pms" data-node="pms" class="flow-node cursor-pointer">
+                <rect x="642" y="392" width="102" height="68" rx="8" fill="#ffffff" stroke="#d8b4fe" stroke-width="1.4"/>
+                <circle cx="693" cy="412" r="9" fill="#f3e8ff" stroke="#7e22ce"/>
+                <circle cx="693" cy="412" r="3" fill="#7e22ce"/>
+                <text x="693" y="434" text-anchor="middle" fill="#0f172a" font-size="8.5" font-weight="900">Preservation &amp;</text>
+                <text x="693" y="446" text-anchor="middle" fill="#0f172a" font-size="8.5" font-weight="900">Site Tracking</text>
+              </g>
+
+              <g id="fn-sms" data-node="sms" class="flow-node cursor-pointer">
+                <rect x="782" y="405" width="112" height="48" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <rect x="789" y="416" width="18" height="20" rx="3" fill="#e0f2fe"/>
+                <path d="M 794 423 L 800 423 M 794 428 L 800 428" stroke="#0284c7" stroke-width="1.6"/>
+                <text x="813" y="425" fill="#0f172a" font-size="8.5" font-weight="900">Shiploose</text>
+                <text x="813" y="437" fill="#0f172a" font-size="8.5" font-weight="900">Master List</text>
+              </g>
+
+              <g id="fn-cog" data-node="cog" class="flow-node cursor-pointer">
+                <rect x="925" y="405" width="135" height="48" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <rect x="933" y="416" width="18" height="18" rx="3" fill="#e0e7ff"/>
+                <path d="M 937 421 L 947 421 L 947 430 L 937 430 Z" fill="#6366f1"/>
+                <text x="956" y="425" fill="#0f172a" font-size="8.5" font-weight="900">COG Preparation</text>
+                <text x="956" y="437" fill="#0f172a" font-size="8.5" font-weight="900">&amp; Packaging</text>
+              </g>
+
+              <g id="fn-truck" data-node="truck" class="flow-node cursor-pointer">
+                <rect x="782" y="480" width="125" height="50" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <rect x="790" y="493" width="15" height="12" rx="2" fill="#64748b"/>
+                <path d="M 805 497 L 810 497 L 813 502 L 813 505 L 805 505 Z" fill="#475569"/>
+                <circle cx="795" cy="506" r="2.5" fill="#0f172a"/><circle cx="810" cy="506" r="2.5" fill="#0f172a"/>
+                <text x="822" y="501" fill="#0f172a" font-size="8.5" font-weight="900">Transportation</text>
+                <text x="822" y="513" fill="#0f172a" font-size="8.5" font-weight="900">&amp; Tracking</text>
+              </g>
+
+              <g id="fn-offshore" data-node="offshore" class="flow-node cursor-pointer" transform="translate(980, 465)">
+                <rect x="0" y="0" width="110" height="66" rx="8" fill="#ffffff" stroke="#bae6fd" stroke-width="1.4"/>
+                <g transform="translate(25, 4)">
+                  <path d="M 6 18 L 54 18 L 46 27 L 14 27 Z" fill="#0369a1"/>
+                  <rect x="20" y="10" width="20" height="8" fill="#0f172a" rx="1"/>
+                  <rect x="23" y="6" width="14" height="4" fill="#38bdf8" rx="0.5"/>
+                  <line x1="30" y1="2" x2="30" y2="6" stroke="#64748b" stroke-width="1.5"/>
+                  <path d="M 2 29 Q 15 27 30 29 T 58 29" stroke="#0284c7" stroke-width="1.8" fill="none"/>
+                </g>
+                <text x="55" y="47" text-anchor="middle" fill="#0f172a" font-size="8.5" font-weight="900">Transportation</text>
+                <text x="55" y="58" text-anchor="middle" fill="#0284c7" font-size="8.5" font-weight="900">to Offshore</text>
+              </g>
+
+              <!-- ======================================================== -->
+              <!-- PROCESS LABELS & ARROW ANNOTATIONS -->
+              <!-- ======================================================== -->
+
+              <!-- 1. Scope & timeline -->
+              <g class="flow-label" data-path="fp-p6">
+                <rect x="228" y="103" width="94" height="18" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="275" y="115" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="800">scope &amp; timeline</text>
+              </g>
+
+              <!-- 2. Actual Progress -->
+              <g class="flow-label" data-path="fp-actual_prog_fwd">
+                <rect x="458" y="99" width="76" height="18" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="496" y="111" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="800">Actual Progress</text>
+              </g>
+
+              <!-- 3. Work Order -->
+              <g class="flow-label" data-path="fp-work_orders">
+                <rect x="565" y="174" width="75" height="18" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="602" y="186" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="800">work order</text>
+              </g>
+
+              <!-- 4. Work release -->
+              <g class="flow-label" data-path="fp-released_work">
+                <rect x="682" y="251" width="70" height="18" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="717" y="263" text-anchor="middle" fill="#1e1b4b" font-size="7.5" font-weight="800">Work release</text>
+              </g>
+
+              <!-- 5. Checksheet / ITR A/B/C triggered + Punchlist -->
+              <g class="flow-label" data-path="fp-rig_to_ocms">
+                <rect x="750" y="126" width="144" height="26" rx="5" fill="#ffffff" stroke="#86efac" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="822" y="137" text-anchor="middle" fill="#14532d" font-size="7.5" font-weight="900">Checksheet / ITR A/B/C</text>
+                <text x="822" y="147" text-anchor="middle" fill="#14532d" font-size="7.5" font-weight="900">triggered + Punchlist</text>
+              </g>
+
+              <!-- 6. Drawing Package to Workfront -->
+              <g class="flow-label" data-path="fp-dwg_to_workfront">
+                <rect x="330" y="296" width="86" height="17" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="373" y="308" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="800">Drawing Package</text>
+              </g>
+
+              <!-- 7. Material Take Off -->
+              <g class="flow-label" data-path="fp-mto_to_req">
+                <rect x="142" y="391" width="82" height="17" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="183" y="403" text-anchor="middle" fill="#0369a1" font-size="7.5" font-weight="800">Material Take Off</text>
+              </g>
+
+              <!-- 8. Buyers Queue -->
+              <g class="flow-label" data-path="fp-req_to_po">
+                <rect x="345" y="386" width="62" height="15" rx="3" fill="#ffffff" stroke="#bfdbfe" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="376" y="397" text-anchor="middle" fill="#1e40af" font-size="7" font-weight="800">Buyers Queue</text>
+              </g>
+
+              <!-- 9. Delivery -->
+              <g class="flow-label" data-path="fp-po_to_rec">
+                <rect x="464" y="412" width="42" height="15" rx="3" fill="#ffffff" stroke="#bfdbfe" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="485" y="423" text-anchor="middle" fill="#1e40af" font-size="7" font-weight="800">Delivery</text>
+              </g>
+
+              <!-- 10. Material issue / return -->
+              <g class="flow-label" data-path="fp-rec_to_workfront">
+                <rect x="484" y="328" width="124" height="24" rx="5" fill="#ffffff" stroke="#c084fc" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="546" y="338" text-anchor="middle" fill="#581c87" font-size="7" font-weight="900">material issue</text>
+                <text x="546" y="348" text-anchor="middle" fill="#581c87" font-size="7" font-weight="800">/ return</text>
+              </g>
+
+              <!-- 11. Package / Long lead / bulk item -->
+              <g class="flow-label" data-path="fp-po_to_exp">
+                <rect x="382" y="466" width="116" height="17" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="440" y="478" text-anchor="middle" fill="#64748b" font-size="6.8" font-weight="800">Package / Long lead / bulk item</text>
+              </g>
+
+              <!-- 12. MSL Tracking -->
+              <g class="flow-label" data-path="fp-cog_to_truck">
+                <rect x="870" y="460" width="62" height="16" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.6" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="901" y="472" text-anchor="middle" fill="#64748b" font-size="7.2" font-weight="800">MSL Tracking</text>
+              </g>
+
+              <!-- 13. Loose Item @ offshore installation -->
+              <g class="flow-label" data-path="fp-db_to_sms">
+                <rect x="340" y="533" width="170" height="18" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.05))"/>
+                <text x="425" y="545" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="800">Loose Item @ offshore installation ╌╌►</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 2 VIEW: CPT WORKFLOW -->
+        <!-- ============================================== -->
+        <div id="s3-view-2" class="hidden flex-1 min-h-0 flex flex-col justify-between my-1 overflow-hidden">
+          <!-- Top Sub-bar with QC Decision Gate Controller -->
+          <div class="flex items-center justify-between py-1 px-1 shrink-0 border-b border-slate-200/70 pb-1.5 mb-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-800 font-bold">CPT Execution Process:</span>
+              <span class="text-[11px] text-slate-500 font-medium hidden sm:inline">From 3D engineering tag extraction to on-site digital inspection and NDT certification</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-slate-500">QC Decision Gate:</span>
+              <div class="inline-flex rounded-lg p-0.5 bg-white border border-slate-300 shadow-sm">
+                <button id="mhb-btn-approved" onclick="toggleMhbQcDecision(true)" class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-600 text-white shadow-sm transition-all flex items-center gap-1">
+                  <span>✓</span> Approved
+                </button>
+                <button id="mhb-btn-rework" onclick="toggleMhbQcDecision(false)" class="px-2.5 py-1 rounded-md text-[10px] font-semibold text-slate-600 hover:text-rose-600 transition-all flex items-center gap-1">
+                  <span>✕</span> Rework
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5-Stage Balanced Full-Height Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-2.5 flex-1 min-h-0 items-stretch my-1 overflow-y-auto sm:overflow-hidden">
+            
+            <!-- Stage 1: CPT System Engineer -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-slate-900 text-white font-extrabold text-xs flex items-center justify-center shrink-0">1</div>
+                  <div class="text-[11px] font-black text-slate-900 uppercase leading-tight">CPT System Eng.</div>
+                </div>
+
+                <div class="space-y-2 py-1">
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">Project Setup</span>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">Register User Access</span>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">Report Template Setup</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 2: Engineering -->
+            <div class="bg-white rounded-xl border border-sky-300 shadow-sm p-3 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center gap-2 border-b border-sky-100 pb-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-sky-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">2</div>
+                  <div class="text-[11px] font-black text-sky-950 uppercase leading-tight">Engineering</div>
+                </div>
+
+                <div class="space-y-2 py-1">
+                  <div class="p-2.5 rounded-lg bg-sky-50/70 border border-sky-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">Extract Drawing &amp; Tags from 3D Model</span>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-sky-50/70 border border-sky-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">Weld &amp; Material Mapping</span>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-sky-50/70 border border-sky-200/80">
+                    <span class="text-[10px] font-bold text-slate-900 leading-snug">SP Manager &amp; EDAS Sync</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 3: PMT Execution -->
+            <div class="bg-white rounded-xl border border-teal-300 shadow-sm p-3 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center gap-2 border-b border-teal-100 pb-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-teal-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">3</div>
+                  <div class="text-[11px] font-black text-teal-950 uppercase leading-tight">PMT Execution</div>
+                </div>
+
+                <div class="space-y-2 py-1 text-[10px]">
+                  <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 hover:border-teal-300 transition-colors">
+                    <span class="font-bold text-slate-900 text-[9.5px]">Print &amp; Attach Barcodes</span>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 hover:border-teal-300 transition-colors">
+                    <span class="font-bold text-slate-900 text-[9.5px]">Fabrication &amp; Installation</span>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 hover:border-teal-300 transition-colors">
+                    <span class="font-bold text-slate-900 text-[9.5px]">Progress Update in CPT</span>
+                  </div>
+
+                  <div id="mhb-draft-box" class="p-2 rounded-lg bg-slate-50 border border-slate-200 hover:border-teal-300 transition-all">
+                    <span class="font-bold text-slate-900 text-[9.5px]">RFI &amp; Draft Report Prep</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 4: QA / QC -->
+            <div class="bg-white rounded-xl border border-indigo-300 shadow-sm p-3 flex flex-col justify-between h-full relative overflow-hidden">
+              <div>
+                <div class="flex items-center gap-2 border-b border-indigo-100 pb-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-indigo-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">4</div>
+                  <div class="text-[11px] font-black text-indigo-950 uppercase leading-tight">QA / QC</div>
+                </div>
+
+                <div class="space-y-2 py-1 text-[10px]">
+                  <div class="p-2 rounded-lg bg-indigo-50/70 border border-indigo-200/80">
+                    <span class="font-bold text-slate-900 text-[9.5px]">Inspection at Site</span>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-emerald-50/70 border border-emerald-200/80">
+                    <span class="font-bold text-slate-900 text-[9.5px]">Client Approval</span>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <span class="font-bold text-slate-800 text-[9px] leading-tight">Fit-Up / Visual Report (Official) Prep</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stage 4 Dynamic Status & Decision Pill -->
+		<div class="pt-2 border-t border-indigo-100 mt-1">
+  			<div class="flex items-center justify-between">
+   			<button type="button" onclick="toggleMhbQcDecision(false)" id="qc-tag-rework" class="px-2 py-1 rounded text-[9px] font-bold bg-slate-200 text-slate-500 hover:text-rose-600 transition-all cursor-pointer">✕ Rework</button>
+    			<button type="button" onclick="toggleMhbQcDecision(true)" id="qc-tag-approved" class="px-2 py-1 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all cursor-pointer">✓ Approved</button>
+  			</div>
+		</div>
+
+		<!-- Animated Rework Path Alert Overlay -->
+			<div id="mhb-rework-path" class="hidden absolute inset-x-2 bottom-2 bg-rose-600 text-white p-2 rounded-lg text-center text-[9px] font-bold shadow-lg animate-pulse">
+  ↩ REWORK TRIGGERED: Loop back to Stage 3.4
+		</div>
+		</div>
+
+            <!-- Stage 5: NDT -->
+            <div id="mhb-stage-5" class="bg-white rounded-xl border border-sky-500 shadow-sm p-3 flex flex-col justify-between h-full transition-all">
+              <div>
+                <div class="flex items-center gap-1.5 border-b border-sky-100 pb-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-sky-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">5</div>
+                  <div class="text-[11px] font-black text-slate-900 uppercase leading-tight">NDT Inspection</div>
+                </div>
+
+                <div class="space-y-2 py-1 text-[9.5px]">
+                  <div class="p-2 rounded-lg bg-slate-900 text-slate-200 flex flex-col items-center justify-center text-center">
+                    <span class="text-[10px] font-black text-cyan-300 tracking-wider">UT / RT / MT / PT</span>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                    <div class="font-bold text-slate-800 text-[9.5px] mb-1">Testing &amp; Compliance Checks:</div>
+                    <ul class="space-y-1 text-slate-600 font-medium text-[8.5px] leading-tight">
+                      <li class="flex items-start gap-1"><span class="text-emerald-600 font-bold shrink-0">✓</span> UT/RT/MT/PT as applicable</li>
+                      <li class="flex items-start gap-1"><span class="text-emerald-600 font-bold shrink-0">✓</span> Ensure weld integrity and compliance</li>
+                      <li class="flex items-start gap-1"><span class="text-emerald-600 font-bold shrink-0">✓</span> Generate NDT reports and records</li>
+                    </ul>
+                  </div>
+
+                  <div class="p-1.5 rounded-lg bg-sky-50 border border-sky-200 text-center text-[8.5px] font-bold text-sky-800">
+                    Direct Sync with OCMS Handover Dossier
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Execution Milestone Pipeline Ribbon -->
+          <div class="rounded-xl bg-white border border-slate-200/90 p-2 px-3 shadow-sm flex items-center justify-between shrink-0 text-slate-700 text-[9.5px] font-semibold mt-1">
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[8.5px]">1</span>
+              <span>Engineering Data &amp; Drawings</span>
+            </div>
+            <span class="text-slate-300 font-bold">➔</span>
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-[8.5px]">2</span>
+              <span>SP Manager &amp; EDAS Sync</span>
+            </div>
+            <span class="text-slate-300 font-bold">➔</span>
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[8.5px]">3</span>
+              <span>PMT Execution &amp; Reporting</span>
+            </div>
+            <span class="text-slate-300 font-bold">➔</span>
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[8.5px]">4</span>
+              <span>QA/QC Check &amp; Approval</span>
+            </div>
+            <span class="text-slate-300 font-bold">➔</span>
+            <div class="flex items-center gap-1.5">
+              <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[8.5px]">5</span>
+              <span>NDT Verification &amp; Compliance</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 3 VIEW: CPT INTEGRATED PROCESS FLOW -->
+        <!-- ============================================== -->
+        <div id="s3-view-3" class="hidden flex-1 min-h-0 flex flex-col justify-between my-1 overflow-hidden">
+          
+          <!-- Top Sub-bar with Summary and Flow Category Indicators -->
+          <div class="flex items-center justify-between py-1 px-1 shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-800">CPT Integrated Architecture:</span>
+              <span class="text-[11px] text-slate-500 font-medium hidden sm:inline">Cross-functional data links between Engineering, CPT, Construction, SCM, Planning &amp; HUC</span>
+            </div>
+          </div>
+
+          <!-- Flowchart Scrollable Canvas Container -->
+          <div class="flex-1 min-h-0 bg-white/95 rounded-2xl border border-slate-200/90 shadow-sm p-1.5 sm:p-2 relative overflow-y-auto overflow-x-auto">
+            
+            <svg id="cpt-integrated-svg" class="w-[1180px] h-[640px] mx-auto select-none block" viewBox="0 0 1180 640" style="text-rendering: geometricPrecision; shape-rendering: geometricPrecision;">
+              <defs>
+                <!-- Arrowhead Marker for Standard Gray/Dark Lines -->
+                <marker id="cpt-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#334155"/>
+                </marker>
+                <!-- Database Cylinder Linear Gradient (Lavender/Purple) -->
+                <linearGradient id="dbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#F3E8FF" />
+                  <stop offset="100%" stop-color="#E9D5FF" />
+                </linearGradient>
+              </defs>
+
+              <!-- ======================================================== -->
+              <!-- LAYER 1: ALL CONTAINER BACKGROUND RECTANGLES & HEADER TABS -->
+              <!-- (Rendered first so no background can clip connector lines) -->
+              <!-- ======================================================== -->
+
+              <!-- 1. Engineering Processes Container -->
+              <rect x="18" y="32" width="310" height="358" rx="14" fill="#F8FAFC" stroke="#0284C7" stroke-width="1.5" stroke-opacity="0.35"/>
+              <g transform="translate(18, 32)">
+                <path d="M 0 14 C 0 6.27 6.27 0 14 0 L 195 0 L 210 28 L 0 28 Z" fill="#0369A1"/>
+                <path d="M 12 18 L 12 8 L 22 18 Z" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+                <line x1="15" y1="18" x2="15" y2="15" stroke="#ffffff" stroke-width="1.2"/>
+                <line x1="18" y1="18" x2="18" y2="13" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="28" y="18" fill="#ffffff" font-size="11" font-weight="900" font-family="Inter, sans-serif">Engineering Processes</text>
+              </g>
+
+              <!-- 2. CPT Processes Container -->
+              <rect x="338" y="22" width="436" height="152" rx="14" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.5" stroke-opacity="0.35"/>
+              <g transform="translate(338, 22)">
+                <path d="M 0 14 C 0 6.27 6.27 0 14 0 L 138 0 L 150 26 L 0 26 Z" fill="#6B21A8"/>
+                <rect x="12" y="6" width="11" height="13" rx="2" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+                <path d="M 14 10 L 16 12 L 20 8" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+                <text x="27" y="17" fill="#ffffff" font-size="10.5" font-weight="900" font-family="Inter, sans-serif">CPT Processes</text>
+              </g>
+
+              <!-- 3. Construction Processes Container -->
+              <rect x="338" y="196" width="372" height="162" rx="14" fill="#F5EFE6" stroke="#92400E" stroke-width="1.5" stroke-opacity="0.45" stroke-dasharray="5 4"/>
+              <g transform="translate(425, 185)">
+                <rect x="0" y="0" width="180" height="22" rx="11" fill="#854D0E" stroke="#713F12" stroke-width="1.2" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.08))"/>
+                <path d="M 14 16 L 14 6 L 22 6 L 19 10 L 14 10" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <text x="28" y="15" fill="#ffffff" font-size="9.8" font-weight="900" font-family="Inter, sans-serif">Construction Processes</text>
+              </g>
+
+              <!-- 4. SCM & Warehouse Processes Container -->
+              <rect x="68" y="440" width="376" height="142" rx="14" fill="#FFF7ED" stroke="#EA580C" stroke-width="1.6" stroke-opacity="0.65" stroke-dasharray="5 4"/>
+              <g transform="translate(140, 429)">
+                <rect x="0" y="0" width="220" height="22" rx="11" fill="#EA580C" stroke="#C2410C" stroke-width="1.2" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))"/>
+                <path d="M 12 7 L 15 7 L 17 14 L 23 14 L 25 9 L 16 9" stroke="#ffffff" stroke-width="1.4" fill="none"/>
+                <circle cx="18" cy="16" r="1.3" fill="#ffffff"/>
+                <circle cx="22" cy="16" r="1.3" fill="#ffffff"/>
+                <text x="30" y="15" fill="#ffffff" font-size="9.8" font-weight="900" font-family="Inter, sans-serif">SCM &amp; Warehouse Processes</text>
+              </g>
+
+              <!-- 5. Planning Processes Container -->
+              <rect x="460" y="440" width="248" height="96" rx="14" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5" stroke-opacity="0.65" stroke-dasharray="5 4"/>
+              <g transform="translate(512, 429)">
+                <rect x="0" y="0" width="144" height="22" rx="11" fill="#D97706" stroke="#B45309" stroke-width="1.2" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.08))"/>
+                <rect x="12" y="5" width="11" height="11" rx="2" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+                <line x1="12" y1="9" x2="23" y2="9" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="28" y="15" fill="#ffffff" font-size="9.8" font-weight="900" font-family="Inter, sans-serif">Planning Processes</text>
+              </g>
+
+              <!-- 6. HUC Processes Container -->
+              <rect x="724" y="146" width="436" height="456" rx="14" fill="#F0FDF4" stroke="#0D9488" stroke-width="1.5" stroke-opacity="0.35"/>
+              <g transform="translate(724, 146)">
+                <path d="M 0 14 C 0 6.27 6.27 0 14 0 L 105 0 L 118 26 L 0 26 Z" fill="#0F766E"/>
+                <path d="M 12 18 L 18 12 M 16 10 C 18 8 21 8 23 10 C 25 12 25 15 23 17" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <text x="28" y="18" fill="#ffffff" font-size="10.5" font-weight="900" font-family="Inter, sans-serif">HUC Processes</text>
+              </g>
+
+              <!-- ======================================================== -->
+              <!-- LAYER 2: INTER-MODULE & INTERNAL CONNECTOR ARROWS -->
+              <!-- (Rendered above container backgrounds so all lines & tips show) -->
+              <!-- ======================================================== -->
+
+              <!-- EDAS top border up directly to CPT Database bottom border (Fully visible straight vertical line) -->
+              <path d="M 396 220 L 396 110" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- Progress Update (certified) to Progress Measurement Database (Clean orthogonal route & visible tip) -->
+              <path d="M 748 83 L 874 83 L 874 170" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- Revised IFC Drawings back to EDMS -->
+              <path d="M 474 137 L 326 137 L 326 228 L 306 228" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- Engineering Processes Connectors -->
+              <path d="M 57 170 L 57 210" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 80 153 L 104 153" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 130 126 L 130 101 L 172 101" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <!-- Arrow from MTO Data up and across to MTO Details Components -->
+              <path d="M 130 126 L 130 78 L 242 78" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 220 106 L 231 106 L 231 129 L 242 129" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <!-- Attributes Mapping to 2D/3D Model (Orthogonal corridor route with visible arrow tip) -->
+              <path d="M 252 144 L 252 178 L 72 178 L 72 210" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 156 153 L 194 153 L 194 230 L 230 230" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 194 153 L 194 278" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 60 246 L 60 292 L 66 292" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 100 306 L 100 330" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 134 344 L 148 344 L 148 292 L 160 292" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 174 306 L 174 344 L 188 344" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- CPT Processes Internal Connectors -->
+              <path d="M 430 83 L 466 83" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 542 83 L 568 83" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 644 83 L 670 83" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 606 100 L 606 122" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 568 137 L 548 137" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- Construction Processes Connectors -->
+              <path d="M 306 238 L 364 238" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 428 252 L 452 252" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 530 252 L 556 252" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 632 252 L 644 252" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 594 295 L 594 270" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 396 220 L 396 212 L 638 212 L 638 238 L 644 238" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- SCM & Warehouse Connectors -->
+              <path d="M 268 264 L 268 408 L 130 408 L 130 470" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 130 508 L 130 534" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 178 489 L 190 489" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 175 550 L 188 550" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 225 536 L 225 506" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 260 489 L 278 489" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 307 503 L 307 520" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 328 536 L 344 536 L 344 489 L 358 489" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 391 505 L 391 534" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 424 550 L 448 550 L 448 382 L 542 382 L 542 310 L 556 310" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- Planning Processes Connectors -->
+              <path d="M 536 489 L 550 489" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 616 489 L 632 489" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 665 472 L 665 282" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- HUC Processes Connectors -->
+              <!-- CPPT to Progress Measurement Database -->
+              <path d="M 706 250 L 718 250 L 718 184 L 850 184" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 898 184 L 922 184" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 976 204 L 976 222" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 1008 235 L 1034 235" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 1069 252 L 1069 278" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 1069 314 L 1069 505 L 1022 505" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 976 248 L 976 270" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 976 296 L 976 318" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 976 344 L 976 364" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 976 398 L 976 460" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 810 297 L 830 297" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 870 280 L 870 256" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 870 340 L 870 316" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 870 394 L 870 370" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+              <path d="M 926 505 L 870 505 L 870 426" fill="none" stroke="#1e293b" stroke-width="1.3" marker-end="url(#cpt-arr)"/>
+
+              <!-- ======================================================== -->
+              <!-- LAYER 3: ALL BOXES, CYLINDERS & TEXT LABELS -->
+              <!-- ======================================================== -->
+
+              <!-- Section 1 Elements -->
+              <rect x="34" y="136" width="46" height="34" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.3"/>
+              <text x="57" y="157" text-anchor="middle" fill="#0369A1" font-size="9" font-weight="800">DDE</text>
+
+              <rect x="28" y="210" width="64" height="36" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.3"/>
+              <text x="60" y="232" text-anchor="middle" fill="#0369A1" font-size="8.5" font-weight="800">2D/3D Model</text>
+
+              <g transform="translate(104, 126)">
+                <path d="M 0 10 L 0 35 Q 26 44 52 35 L 52 10 Q 26 18 0 10 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="26" cy="10" rx="26" ry="8" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="26" y="25" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">MTO Data</text>
+                <text x="26" y="34" text-anchor="middle" fill="#581C87" font-size="6.5" font-weight="700">(All Discipline)</text>
+              </g>
+
+              <g transform="translate(172, 82)">
+                <path d="M 0 9 L 0 30 Q 24 38 48 30 L 48 9 Q 24 16 0 9 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="24" cy="9" rx="24" ry="7" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="24" y="21" text-anchor="middle" fill="#581C87" font-size="7.2" font-weight="800">Construction</text>
+                <text x="24" y="29" text-anchor="middle" fill="#581C87" font-size="7.2" font-weight="800">Database</text>
+              </g>
+
+              <rect x="242" y="70" width="74" height="32" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="279" y="84" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">MTO Details</text>
+              <text x="279" y="94" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Components</text>
+
+              <rect x="242" y="114" width="74" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="279" y="128" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Attributes</text>
+              <text x="279" y="138" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Mapping</text>
+
+              <g transform="translate(230, 196)">
+                <path d="M 0 14 L 0 54 Q 38 66 76 54 L 76 14 Q 38 24 0 14 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.4"/>
+                <ellipse cx="38" cy="14" rx="38" ry="11" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.4"/>
+                <text x="38" y="32" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Engineering Info</text>
+                <text x="38" y="42" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Management</text>
+                <text x="38" y="52" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">System (EDMS)</text>
+              </g>
+
+              <rect x="66" y="278" width="68" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="100" y="295" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">AFC Drawings</text>
+
+              <rect x="66" y="330" width="68" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="100" y="347" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">IFC Drawings</text>
+
+              <rect x="160" y="278" width="68" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="194" y="295" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">Cutting Plans</text>
+
+              <rect x="188" y="330" width="70" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="223" y="347" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">CNC Programs</text>
+
+              <!-- Section 2 Elements -->
+              <g transform="translate(362, 54)">
+                <path d="M 0 12 L 0 46 Q 34 56 68 46 L 68 12 Q 34 20 0 12 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="34" cy="12" rx="34" ry="9" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="34" y="28" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Construction</text>
+                <text x="34" y="38" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Progress</text>
+                <text x="34" y="47" text-anchor="middle" fill="#581C87" font-size="7" font-weight="700">Tracking (CPT)</text>
+              </g>
+
+              <rect x="466" y="66" width="76" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="504" y="81" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">Request for</text>
+              <text x="504" y="92" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">Inspection</text>
+
+              <rect x="568" y="66" width="76" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="606" y="86" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">QC Verification</text>
+
+              <rect x="670" y="62" width="78" height="42" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="709" y="80" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Progress</text>
+              <text x="709" y="90" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Update</text>
+              <text x="709" y="99" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">(certified)</text>
+
+              <rect x="568" y="122" width="74" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="605" y="136" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Red Line</text>
+              <text x="605" y="145" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Markup</text>
+
+              <rect x="474" y="122" width="74" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="511" y="136" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Revised IFC</text>
+              <text x="511" y="145" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Drawings</text>
+
+              <!-- Section 3 Elements -->
+              <g transform="translate(364, 220)">
+                <path d="M 0 12 L 0 46 Q 32 56 64 46 L 64 12 Q 32 20 0 12 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="32" cy="12" rx="32" ry="9" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="32" y="27" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Engineering</text>
+                <text x="32" y="36" text-anchor="middle" fill="#581C87" font-size="7" font-weight="700">Data Mgmt.</text>
+                <text x="32" y="46" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">System (EDAS)</text>
+              </g>
+
+              <rect x="452" y="235" width="78" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="491" y="249" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Piping MTO</text>
+              <text x="491" y="259" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">(SP MAN)</text>
+
+              <rect x="556" y="232" width="76" height="38" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="594" y="247" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Progress</text>
+              <text x="594" y="257" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Update</text>
+              <text x="594" y="265" text-anchor="middle" fill="#64748B" font-size="6.8" font-weight="700">(physical)</text>
+
+              <rect x="556" y="295" width="76" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="594" y="309" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">At site</text>
+              <text x="594" y="318" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Construction</text>
+
+              <g transform="translate(644, 218)">
+                <path d="M 0 14 L 0 54 Q 31 66 62 54 L 62 14 Q 31 24 0 14 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="31" cy="14" rx="31" ry="10" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="31" y="31" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="800">Construction</text>
+                <text x="31" y="40" text-anchor="middle" fill="#581C87" font-size="6.8" font-weight="700">Planning &amp;</text>
+                <text x="31" y="49" text-anchor="middle" fill="#581C87" font-size="7" font-weight="800">Progress Tracking</text>
+                <text x="31" y="58" text-anchor="middle" fill="#581C87" font-size="7" font-weight="800">(CPPT)</text>
+              </g>
+
+              <!-- Section 4 Elements -->
+              <rect x="82" y="470" width="96" height="38" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="130" y="483" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Purchase Requisition</text>
+              <text x="130" y="493" text-anchor="middle" fill="#1E293B" font-size="7" font-weight="700">(PR)</text>
+              <text x="130" y="502" text-anchor="middle" fill="#64748B" font-size="6.5" font-weight="700">(by Engineering &amp; PMT)</text>
+
+              <rect x="85" y="534" width="90" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="130" y="548" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Request for</text>
+              <text x="130" y="557" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Quotation</text>
+              <text x="130" y="565" text-anchor="middle" fill="#64748B" font-size="6.5" font-weight="700">(by SCM)</text>
+
+              <rect x="190" y="472" width="70" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="225" y="487" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Expediting</text>
+              <text x="225" y="497" text-anchor="middle" fill="#64748B" font-size="6.8" font-weight="700">(Expediting Report)</text>
+
+              <rect x="188" y="536" width="74" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="225" y="550" text-anchor="middle" fill="#1E293B" font-size="7.8" font-weight="800">Purchase Order</text>
+              <text x="225" y="559" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">(PO)</text>
+
+              <rect x="278" y="475" width="58" height="28" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="307" y="492" text-anchor="middle" fill="#1E293B" font-size="8" font-weight="800">Receiving</text>
+
+              <g transform="translate(286, 520)">
+                <path d="M 0 8 L 0 28 Q 21 34 42 28 L 42 8 Q 21 14 0 8 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="21" cy="8" rx="21" ry="6" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="21" y="22" text-anchor="middle" fill="#581C87" font-size="7.8" font-weight="800">eMatrack</text>
+              </g>
+
+              <rect x="358" y="475" width="66" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="391" y="489" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Material</text>
+              <text x="391" y="498" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Issuance</text>
+
+              <rect x="358" y="534" width="66" height="32" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+              <text x="391" y="547" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">Surplus</text>
+              <text x="391" y="557" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">Management</text>
+
+              <!-- Section 5 Elements -->
+              <rect x="472" y="472" width="64" height="34" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.2"/>
+              <text x="504" y="487" text-anchor="middle" fill="#0369A1" font-size="7.5" font-weight="800">Master</text>
+              <text x="504" y="497" text-anchor="middle" fill="#0369A1" font-size="7.5" font-weight="800">Schedule</text>
+
+              <rect x="550" y="472" width="66" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="583" y="487" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Level 3/4</text>
+              <text x="583" y="497" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Schedule</text>
+
+              <rect x="632" y="472" width="66" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="665" y="487" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Level 5/6</text>
+              <text x="665" y="497" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Schedule</text>
+
+              <!-- Section 6 Elements -->
+              <rect x="734" y="278" width="76" height="38" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="772" y="293" text-anchor="middle" fill="#1E293B" font-size="7.2" font-weight="800">Transportation &amp;</text>
+              <text x="772" y="304" text-anchor="middle" fill="#1E293B" font-size="7.2" font-weight="800">Installation</text>
+
+              <g transform="translate(850, 168)">
+                <path d="M 0 9 L 0 32 Q 24 40 48 32 L 48 9 Q 24 16 0 9 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.3"/>
+                <ellipse cx="24" cy="9" rx="24" ry="7" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.3"/>
+                <text x="24" y="22" text-anchor="middle" fill="#581C87" font-size="7.2" font-weight="800">Progress</text>
+                <text x="24" y="30" text-anchor="middle" fill="#581C87" font-size="7" font-weight="700">Measurement</text>
+              </g>
+
+              <rect x="922" y="170" width="108" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="976" y="183" text-anchor="middle" fill="#1E293B" font-size="7.2" font-weight="800">Mechanical Completion,</text>
+              <text x="976" y="193" text-anchor="middle" fill="#1E293B" font-size="7.2" font-weight="800">Pre-commissioning Progress</text>
+
+              <rect x="944" y="222" width="64" height="26" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="976" y="238" text-anchor="middle" fill="#1E293B" font-size="8.5" font-weight="800">ITR-A</text>
+
+              <rect x="1034" y="218" width="70" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="1069" y="232" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Punchlist Items</text>
+              <text x="1069" y="242" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Cat-A Cleared</text>
+
+              <rect x="1034" y="278" width="70" height="36" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+              <text x="1069" y="292" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">Discipline</text>
+              <text x="1069" y="301" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">Acceptance</text>
+              <text x="1069" y="309" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">Certification</text>
+
+              <rect x="944" y="270" width="64" height="26" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="976" y="286" text-anchor="middle" fill="#1E293B" font-size="8.5" font-weight="800">ITR-B</text>
+
+              <rect x="940" y="318" width="72" height="26" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="976" y="334" text-anchor="middle" fill="#1E293B" font-size="8.5" font-weight="800">Certificate RFC</text>
+
+              <rect x="940" y="364" width="72" height="34" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="976" y="378" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Punchlist items</text>
+              <text x="976" y="387" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">category</text>
+              <text x="976" y="395" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">cleared</text>
+
+              <rect x="834" y="222" width="72" height="34" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+              <text x="870" y="238" text-anchor="middle" fill="#1D4ED8" font-size="7.8" font-weight="800">System</text>
+              <text x="870" y="249" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="700">Handover</text>
+
+              <rect x="830" y="280" width="80" height="36" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="870" y="294" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Offshore Hook</text>
+              <text x="870" y="303" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Up &amp;</text>
+              <text x="870" y="311" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">Commissioning</text>
+
+              <rect x="830" y="340" width="80" height="30" rx="6" fill="#ffffff" stroke="#64748B" stroke-width="1.2"/>
+              <text x="870" y="353" text-anchor="middle" fill="#1E293B" font-size="7.5" font-weight="800">Hook Up &amp;</text>
+              <text x="870" y="362" text-anchor="middle" fill="#64748B" font-size="7" font-weight="700">Commissioning</text>
+
+              <rect x="834" y="394" width="72" height="32" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+              <text x="870" y="408" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="800">SH System</text>
+              <text x="870" y="418" text-anchor="middle" fill="#1D4ED8" font-size="7.5" font-weight="700">Handover</text>
+
+              <g transform="translate(926, 460)">
+                <path d="M 0 16 L 0 60 Q 48 74 96 60 L 96 16 Q 48 28 0 16 Z" fill="url(#dbGrad)" stroke="#7E22CE" stroke-width="1.4"/>
+                <ellipse cx="48" cy="16" rx="48" ry="12" fill="#FAF5FF" stroke="#7E22CE" stroke-width="1.4"/>
+                <text x="48" y="36" text-anchor="middle" fill="#581C87" font-size="8.5" font-weight="800">Onshore Offshore</text>
+                <text x="48" y="46" text-anchor="middle" fill="#581C87" font-size="8" font-weight="800">Completion</text>
+                <text x="48" y="56" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="700">Management</text>
+                <text x="48" y="65" text-anchor="middle" fill="#581C87" font-size="7.5" font-weight="700">System (OCMS)</text>
+              </g>
+            </svg>
+
+          </div>
+
+          <!-- Bottom Legend Bar for Tab 3 -->
+          <div class="mt-1 pt-1.5 border-t border-slate-200/90 flex flex-wrap items-center justify-between text-[9px] font-bold text-slate-600 px-1 shrink-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-[#0369A1]"></span>
+              <span>Engineering Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-[#6B21A8]"></span>
+              <span>CPT Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded border border-amber-700 bg-[#F5EFE6]"></span>
+              <span>Construction Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded border border-orange-500 bg-orange-100"></span>
+              <span>SCM &amp; Warehouse Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded border border-amber-600 bg-amber-50"></span>
+              <span>Planning Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-[#0F766E]"></span>
+              <span>HUC Processes</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-purple-200 border border-purple-500"></span>
+              <span>Core Systems &amp; Databases (EDMS / EDAS / CPT / CPPT / OCMS)</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 4: CPT MOBILE APP SHOWCASE -->
+      <!-- ======================================================== -->
+      <section id="slide-4" class="slide-transition hidden w-full flex-1 min-h-0 flex flex-col p-4 sm:p-6 lg:p-7 relative overflow-hidden">
+        <div class="mb-3 shrink-0">
+          <div class="text-xs font-semibold text-teal-700 uppercase tracking-wider mb-1">Mobile Field Solution</div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">CPT Mobile Key Features</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1 min-h-0 items-center">
+          <div class="lg:col-span-5 flex justify-center items-center h-full">
+            <img src="CPT Mobile.png" alt="CPT Mobile application" class="max-w-[70%] max-h-[70%] object-contain rounded-2xl shadow-2xl">
+          </div>
+
+          <!-- Feature Selection Controller -->
+          <div class="lg:col-span-7 space-y-2">
+            <div class="phone-feature-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs tabular-num">01</div>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900">Fabrication Progress Status</div>
+                  <div class="text-[11px] text-slate-500">PMT updates : fit up and weld progress for fabrication and installation</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-feature-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs tabular-num">02</div>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900">Inspection Progress Status</div>
+                  <div class="text-[11px] text-slate-500">QC updates : fit up and weld inspection for fabrication and installation</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-feature-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs tabular-num">03</div>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900">Spool Tracking</div>
+                  <div class="text-[11px] text-slate-500">Update spool location &amp; yard logistics</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-feature-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs tabular-num">04</div>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900">Summary &amp; Details Progress Report</div>
+                  <div class="text-[11px] text-slate-500">Progress report by area, dia-inch, and material type</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-feature-btn w-full text-left p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs tabular-num">05</div>
+                <div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900">RFI (Request For Inspection)</div>
+                  <div class="text-[11px] text-slate-500">Request for Inspection (RFI) submission and instant acceptance</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://app.supademo.com/demo/cmup5vqen00nkyr0j90vd6i0o" target="_blank" rel="noopener noreferrer" class="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-500 hover:to-teal-500 text-white font-semibold text-sm shadow-md transition-all inline-flex items-center justify-center gap-2">
+              Try Interactive Demo
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 5: OBJECTIVES, BENEFITS & IMPLEMENTATION -->
+      <!-- ======================================================== -->
+      <section id="slide-5" class="slide-transition hidden w-full flex-1 min-h-0 flex flex-col justify-center p-4 sm:p-6 lg:p-7 relative overflow-hidden bg-slate-50/80">
+        <div class="w-full flex flex-col justify-center my-auto">
+          <!-- Header Section -->
+          <div class="text-left shrink-0 mb-3.5">
+            <div class="text-xs font-semibold text-teal-700 uppercase tracking-wider mb-1">
+              Value Realization Framework
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Objectives, Benefits &amp; Implementation
+            </h2>
+            <p class="text-xs text-slate-600 mt-1 font-medium">
+              How CoTrack accelerates project execution through synchronized <span class="text-sky-700 font-bold italic">people</span>, disciplined <span class="text-teal-700 font-bold italic">processes</span>, and connected <span class="text-indigo-700 font-bold italic">software</span>
+            </p>
+          </div>
+
+          <!-- 3-Column Core Grid filling available height -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+            
+            <!-- Column 1: STRATEGIC OBJECTIVES (4 Cols) -->
+            <div class="lg:col-span-4 bg-white rounded-xl border border-slate-200/90 shadow-sm p-4 flex flex-col justify-between">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2 shrink-0">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                  </div>
+                  <h3 class="text-xs font-black tracking-wider text-slate-900 uppercase">STRATEGIC OBJECTIVES</h3>
+                </div>
+              </div>
+
+              <div class="space-y-2 flex-1 flex flex-col justify-between py-1 text-[11px]">
+                <div class="p-2 rounded-lg bg-slate-50/90 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-slate-900 text-[10.5px] uppercase tracking-wide">1. CLIENT SATISFACTION</div>
+                  <div class="text-[10px] text-slate-600 leading-snug mt-0.5">Deliver projects that meet expectations for quality, safety and on-time performance.</div>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50/90 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-slate-900 text-[10.5px] uppercase tracking-wide">2. SCHEDULE TRACKING</div>
+                  <div class="text-[10px] text-slate-600 leading-snug mt-0.5">Monitor progress in real time to stay aligned with milestones and critical deadlines.</div>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50/90 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-slate-900 text-[10.5px] uppercase tracking-wide">3. DOCUMENT MANAGEMENT</div>
+                  <div class="text-[10px] text-slate-600 leading-snug mt-0.5">Centralize, control and secure all project documents for easy access and traceability.</div>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50/90 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-slate-900 text-[10.5px] uppercase tracking-wide">4. COMMUNICATION</div>
+                  <div class="text-[10px] text-slate-600 leading-snug mt-0.5">Ensure clear, timely and transparent communication across all teams and stakeholders.</div>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50/90 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-slate-900 text-[10.5px] uppercase tracking-wide">5. SEAMLESS COMPLETION</div>
+                  <div class="text-[10px] text-slate-600 leading-snug mt-0.5">Close out projects efficiently with verified deliverables and lessons learned.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: IMPLEMENTATION WORKSHOP (4 Cols) -->
+            <div class="lg:col-span-4 bg-white rounded-xl border border-slate-200/90 shadow-sm p-4 flex flex-col justify-between">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2 shrink-0">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  </div>
+                  <h3 class="text-xs font-black tracking-wider text-slate-900 uppercase">IMPLEMENTATION WORKSHOP</h3>
+                </div>
+              </div>
+
+              <!-- Workshop Image -->
+              <div class="flex-1 min-h-[190px] rounded-xl border border-slate-200 bg-slate-50/60 p-2 flex items-center justify-center mb-2.5 relative overflow-hidden group">
+                <img src="workshop.jpg" alt="Implementation workshop" class="w-full h-full object-cover rounded-lg">
+              </div>
+
+              <!-- 3 Operational Enabler Cards -->
+              <div class="grid grid-cols-3 gap-1.5">
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 text-center flex flex-col justify-between">
+                  <div class="text-[9px] font-black text-slate-900 uppercase">IMPLEMENTERS</div>
+                  <div class="text-[8px] text-slate-500 font-medium leading-tight mt-0.5">Project teams &amp; functional leads</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 text-center flex flex-col justify-between">
+                  <div class="text-[9px] font-black text-slate-900 uppercase">STAKEHOLDERS</div>
+                  <div class="text-[8px] text-slate-500 font-medium leading-tight mt-0.5">Cross-functional team alignment</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 text-center flex flex-col justify-between">
+                  <div class="text-[9px] font-black text-slate-900 uppercase">SOFTWARE USAGE</div>
+                  <div class="text-[8px] text-slate-500 font-medium leading-tight mt-0.5">CoTrack live on tablets &amp; mobile</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: OPERATIONAL BENEFITS (4 Cols) -->
+            <div class="lg:col-span-4 bg-white rounded-xl border border-slate-200/90 shadow-sm p-4 flex flex-col justify-between">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-2 shrink-0">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  </div>
+                  <h3 class="text-xs font-black tracking-wider text-slate-900 uppercase">OPERATIONAL BENEFITS</h3>
+                </div>
+              </div>
+
+              <div class="space-y-2 flex-1 flex flex-col justify-between py-1 text-[10px]">
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 hover:border-sky-300 transition-colors">
+                  <div class="font-black text-sky-700 uppercase tracking-wide text-[10px]">CMT</div>
+                  <ul class="text-[9.5px] text-slate-600 mt-1 space-y-0.5 leading-snug">
+                    <li>• Real time progress visibilty.</li>
+                    <li>• Better coordination & resource alignment.</li>
+                    <li>• Improved site productivity.</li>
+                  </ul>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 hover:border-teal-300 transition-colors">
+                  <div class="font-black text-teal-700 uppercase tracking-wide text-[10px]">QC</div>
+                  <ul class="text-[9.5px] text-slate-600 mt-1 space-y-0.5 leading-snug">
+                    <li>• Streamlined inspection & test tracking.</li>
+                    <li>• Faster NCR resolution.</li>
+                    <li>• Higher quality outcomes.</li>
+                  </ul>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 hover:border-amber-300 transition-colors">
+                  <div class="font-black text-amber-700 uppercase tracking-wide text-[10px]">BLASTING &amp; PAINTING</div>
+                  <ul class="text-[9.5px] text-slate-600 mt-1 space-y-0.5 leading-snug">
+                    <li>• Track surface prep, coating & DFT results.</li>
+                    <li>• Monitor WFT/DFT and hold points.</li>
+                    <li>• Reduce rework and coating defects.</li>
+                  </ul>
+                </div>
+
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200/80 hover:border-indigo-300 transition-colors">
+                  <div class="font-black text-indigo-700 uppercase tracking-wide text-[10px]">PLANNER &amp; COST CONTROL</div>
+                  <ul class="text-[9.5px] text-slate-600 mt-1 space-y-0.5 leading-snug">
+                    <li>• Accurate progress & productivity tracking.</li>
+                    <li>• Earned value & variance visibility.</li>
+                    <li>• Stronger cost control & profitability.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- SLIDE 6: ROADMAP & CLOSING CALL TO ACTION -->
+      <!-- ======================================================== -->
+      <section id="slide-6" class="slide-transition hidden w-full flex-1 min-h-0 flex flex-col justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+        <div class="my-auto">
+          <div class="text-xs font-semibold text-teal-700 uppercase tracking-wider mb-1">Our Future Plan</div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-4">
+            Driving the Next Phase of <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-teal-600 to-indigo-600">CoTrack Digital Transformation</span>
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-white border-2 border-sky-500/70 shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-black text-sky-700 uppercase tracking-wider block mb-2">HORIZON 1</span>
+                <h3 class="text-sm font-bold text-slate-900 mb-1.5">Platform Modernization</h3>
+                <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">Modernize platforms for a future-ready experience</p>
+                <ul class="text-[11px] text-slate-700 space-y-2 font-medium">
+                  <li>▹ Upgrading desktop tools to web-based apps</li>
+                  <li>▹ Enhancing digital inspections with mobile apps</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border-2 border-teal-500/70 shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-black text-teal-700 uppercase tracking-wider block mb-2">HORIZON 2</span>
+                <h3 class="text-sm font-bold text-slate-900 mb-1.5">Digital Inspection &amp; Visibility</h3>
+                <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">Improve efficiency, visibility and real-time insight</p>
+                <ul class="text-[11px] text-slate-700 space-y-2 font-medium">
+                  <li>▹ Incorporating IoT for wearable inspections</li>
+                  <li>▹ Adding advanced tracking features to CPT</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border-2 border-indigo-500/70 shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-black text-indigo-700 uppercase tracking-wider block mb-2">HORIZON 3</span>
+                <h3 class="text-sm font-bold text-slate-900 mb-1.5">Integration &amp; Advanced Capability</h3>
+                <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">Connect systems and unlock advanced capabilities</p>
+                <ul class="text-[11px] text-slate-700 space-y-2 font-medium">
+                  <li>▹ Introducing an online executive dashboard for CPT</li>
+                  <li>▹ Integrating CPT with AWP and 4D scheduling</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation Bar -->
+      <footer class="h-14 border-t border-slate-200 bg-white/95 px-6 flex items-center justify-between z-20 shrink-0">
+        <div class="flex items-center space-x-2">
+          <button id="btnPrevSlide" onclick="prevSlide()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium flex items-center gap-1.5 transition disabled:opacity-40 border border-slate-200">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <span class="hidden sm:inline">Previous</span>
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="goToSlide(1)" id="dot-1" class="w-2.5 h-2.5 rounded-full bg-sky-600 transition-all"></button>
+          <button onclick="goToSlide(2)" id="dot-2" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+          <button onclick="goToSlide(3)" id="dot-3" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+          <button onclick="goToSlide(4)" id="dot-4" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+          <button onclick="goToSlide(5)" id="dot-5" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+          <button onclick="goToSlide(6)" id="dot-6" class="w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all"></button>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button id="btnNextSlide" onclick="nextSlide()" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium flex items-center gap-1.5 transition shadow-sm">
+            <span class="hidden sm:inline">Next</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <!-- Original inline script extracted to script.js.
+  <script>
+    const moduleData = {
+      edas: {
+        code: "EDAS",
+        title: "Engineering Design Database System",
+        desc: "A central database capturing and synchronizing engineering tags, drawing attributes, and datasheets across all project execution disciplines.",
+        who: ["Design Engineer", "Engineering Coordinator"],
+        delivers: ["Engineering data repository", "Source of truth", "Fabrication engineering reporting"],
+        value: ["Accurate Engineering Information"],
+        color: "sky"
+      },
+      sap: {
+        code: "SAP",
+        title: "Enterprise Resource Planning & Procurement",
+        desc: "Enterprise finance and procurement integration matching purchase orders, mill receipts, and project cost accounts.",
+        who: ["Procurement", "Warehouse", "SCMs"],
+        delivers: ["Procurement management", "Purchase requisition & purchase order", "Expediting management"],
+        value: ["Efficient Procurement Control"],
+        color: "blue"
+      },
+      ematrack_pms: {
+        code: "eMaTrack PMS",
+        title: "Material Tracking & Preservation Management",
+        desc: "End-to-end receipt verification with digital certificates, Positive Material Identification, and scheduled equipment preservation routines.",
+        who: ["Material Coordinator", "Material Inspector"],
+        delivers: ["Material tracking", "Material traceability", "Supply chain visibility"],
+        value: ["Material Visibility"],
+        color: "teal"
+      },
+      spmanager: {
+        code: "SPManager",
+        title: "Spool Production & Yard Logistics Manager",
+        desc: "Real-time spool lifecycle tracking across Pasir Gudang fabrication bays, blasting/painting, and laydown yards.",
+        who: ["Fab Team", "Piping Engineers", "Construction Team"],
+        delivers: ["Spool tracking", "Fabrication progress tracking", "Spool-to-material traceability"],
+        value: ["Fabrication Visibility"],
+        color: "cyan"
+      },
+      cppt: {
+        code: "CPPT",
+        title: "Construction & Piping Progress Tracker",
+        desc: "Mobile-first site execution enabling welders and QC inspectors to log joint fit-up, weld runs, and digital RFIs instantly.",
+        who: ["PMT", "Construction Planner", "Project Management", "Subcontractor"],
+        delivers: ["Construction planning", "Work package management", "Dashboard & reporting"],
+        value: ["Progress Transparency"],
+        color: "emerald"
+      },
+      ocms: {
+        code: "OCMS",
+        title: "Completion Management System",
+        desc: "Tracks mechanical completion, pre-commissioning subsystems, ITR-A/B digital verification, and final client turnover.",
+        who: ["Mechanical Completion", "Pre-commissioning", "Inspector", "Client"],
+        delivers: ["Completion management", "Pre-commissioning tracking", "Commissioning management"],
+        value: ["Completion Readiness"],
+        color: "amber"
+      },
+      edms: {
+        code: "EDMS",
+        title: "Electronic Document Management System",
+        desc: "Single source of truth for engineering revisions, vendor data books, client comments, and final MDR handover.",
+        who: ["Document Control", "Engineering Teams", "Clients"],
+        delivers: ["Document control", "Project documentation management"],
+        value: ["Controlled Documentation"],
+        color: "indigo"
+      },
+      sms: {
+        code: "SMS",
+        title: "Shiploose Management System",
+        desc: "Tracks and packages shiploose components from yard packing through barge transit to offshore installation.",
+        who: ["Design Engineer", "Material Coordinator", "Offshore"],
+        delivers: ["Ship-loose management", "Logistics visibility"],
+        value: ["Logistics Visibility"],
+        color: "purple"
+      }
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    function updateSlideUI() {
+      for (let i = 1; i <= totalSlides; i++) {
+        const slideEl = document.getElementById(`slide-${i}`);
+        const dotEl = document.getElementById(`dot-${i}`);
+        if (i === currentSlide) {
+          if (slideEl) slideEl.classList.remove('hidden');
+          if (dotEl) dotEl.className = 'w-5 h-2.5 rounded-full bg-sky-600 transition-all';
+        } else {
+          if (slideEl) slideEl.classList.add('hidden');
+          if (dotEl) dotEl.className = 'w-2.5 h-2.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all';
+        }
+      }
+
+      const counterEl = document.getElementById('slideCounterText');
+      if (counterEl) counterEl.innerText = `0${currentSlide} / 0${totalSlides}`;
+
+      const prevBtn = document.getElementById('btnPrevSlide');
+      if (prevBtn) prevBtn.disabled = (currentSlide === 1);
+      
+      const nextBtn = document.getElementById('btnNextSlide');
+      if (nextBtn) {
+        if (currentSlide === totalSlides) {
+          nextBtn.innerHTML = `<span>End Deck</span>`;
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.innerHTML = `<span class="hidden sm:inline">Next</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`;
+          nextBtn.disabled = false;
+        }
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updateSlideUI();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlideUI();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideUI();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      const activeEl = document.activeElement;
+      const isInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT');
+      if (isInput) return;
+
+      if (['ArrowRight', 'ArrowDown', ' ', 'Enter', 'n', 'N'].includes(e.key)) {
+        if (currentSlide < totalSlides) {
+          e.preventDefault();
+          nextSlide();
+        }
+      } else if (['ArrowLeft', 'ArrowUp', 'Backspace', 'p', 'P'].includes(e.key)) {
+        if (currentSlide > 1) {
+          e.preventDefault();
+          prevSlide();
+        }
+      }
+    });
+
+    function selectModule(key) {
+      const data = moduleData[key];
+      if (!data) return;
+
+      document.getElementById('mod-code').innerText = data.code;
+      document.getElementById('mod-title').innerText = data.title;
+      document.getElementById('mod-desc').innerText = data.desc;
+
+      const whoList = document.getElementById('mod-who-list');
+      const deliversList = document.getElementById('mod-delivers-list');
+      const valueList = document.getElementById('mod-value-list');
+
+      if (whoList && data.who) {
+        whoList.innerHTML = data.who.map(item => `<li class="flex items-center gap-1.5"><span class="text-${data.color}-500 font-bold">•</span> ${item}</li>`).join('');
+      }
+      if (deliversList && data.delivers) {
+        deliversList.innerHTML = data.delivers.map(item => `<li class="flex items-center gap-1.5"><span class="text-${data.color}-500 font-bold">•</span> ${item}</li>`).join('');
+      }
+      if (valueList && data.value) {
+        valueList.innerHTML = data.value.map(item => `<li class="flex items-center gap-1.5"><span class="text-${data.color}-500 font-bold">•</span> ${item}</li>`).join('');
+      }
+
+      const iconTag = document.getElementById('mod-icon-tag');
+      if (iconTag) iconTag.className = `w-3 h-3 rounded-full bg-${data.color}-500 ring-4 ring-${data.color}-100`;
+
+      Object.keys(moduleData).forEach(k => {
+        const node = document.getElementById(`node-${k}`);
+        const spoke = document.getElementById(`spoke-${k}`);
+        if (k === key) {
+          if (node) node.className = `module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-${data.color}-500 shadow-xl ring-4 ring-${data.color}-100 scale-105 opacity-100 transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer p-1`;
+          if (spoke) {
+            spoke.setAttribute('stroke', '#0284C7');
+            spoke.setAttribute('stroke-width', '2.5');
+            spoke.setAttribute('opacity', '1');
+          }
+        } else {
+          if (node) node.className = 'module-node group absolute z-20 w-20 h-20 sm:w-[86px] sm:h-[86px] lg:w-[94px] lg:h-[94px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border-2 border-slate-300/80 shadow-sm opacity-80 hover:opacity-100 scale-100 transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer p-1';
+          if (spoke) {
+            spoke.setAttribute('stroke', '#CBD5E1');
+            spoke.setAttribute('stroke-width', '1.2');
+            spoke.setAttribute('opacity', '0.45');
+          }
+        }
+      });
+    }
+
+    function switchSlide3Workflow(tabIndex) {
+      const titles = {
+        1: "Project Execution Life Cycle",
+        2: "CPT Workflow",
+        3: "CPT Integrated Process Flow"
+      };
+      const titleEl = document.getElementById('s3-workflow-title');
+      if (titleEl && titles[tabIndex]) titleEl.innerText = titles[tabIndex];
+
+      for (let i = 1; i <= 3; i++) {
+        const viewEl = document.getElementById(`s3-view-${i}`);
+        const btnEl = document.getElementById(`s3-tab-btn-${i}`);
+        if (viewEl) {
+          if (i === tabIndex) viewEl.classList.remove('hidden');
+          else viewEl.classList.add('hidden');
+        }
+        if (btnEl) {
+          if (i === tabIndex) btnEl.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-sm transition-all flex items-center gap-1.5";
+          else btnEl.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all flex items-center gap-1.5";
+        }
+      }
+
+      /* Zoom controls visibility: Hide for CPT Workflow (tab 2), show for diagram tabs 1 & 3 */
+      const zoomControls = document.getElementById('s3-zoom-controls');
+      if (zoomControls) {
+        if (tabIndex === 2) {
+          zoomControls.classList.add('hidden');
+        } else {
+          zoomControls.classList.remove('hidden');
+        }
+      }
+
+      /* Update zoom display to reflect whichever diagram is now active */
+      const currentActiveView = document.getElementById(`s3-view-${tabIndex}`);
+      if (currentActiveView) {
+        const diagram = currentActiveView.querySelector('svg');
+        const zoomVal = diagram ? parseFloat(diagram.style.zoom || 1) : 1;
+        const label = document.getElementById('s3-zoom-label');
+        if (label) label.textContent = `${Math.round(zoomVal * 100)}%`;
+      }
+    }
+
+    function toggleMhbQcDecision(isApproved) {
+      const btnApp = document.getElementById('mhb-btn-approved');
+      const btnRew = document.getElementById('mhb-btn-rework');
+      const tagApp = document.getElementById('qc-tag-approved');
+      const tagRew = document.getElementById('qc-tag-rework');
+      const reworkPath = document.getElementById('mhb-rework-path');
+      const stage5 = document.getElementById('mhb-stage-5');
+      const draftBox = document.getElementById('mhb-draft-box');
+
+      if (isApproved) {
+        if (btnApp) btnApp.className = "px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-600 text-white shadow-sm transition-all flex items-center gap-1";
+        if (btnRew) btnRew.className = "px-2.5 py-1 rounded-md text-[10px] font-semibold text-slate-600 hover:text-rose-600 transition-all flex items-center gap-1";
+        if (tagApp) tagApp.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+        if (tagRew) tagRew.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-slate-200 text-slate-500";
+        if (reworkPath) reworkPath.classList.add('hidden');
+        if (stage5) stage5.classList.remove('opacity-40', 'grayscale');
+        if (draftBox) draftBox.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50');
+      } else {
+        if (btnApp) btnApp.className = "px-2.5 py-1 rounded-md text-[10px] font-semibold text-slate-600 hover:text-emerald-600 transition-all flex items-center gap-1";
+        if (btnRew) btnRew.className = "px-2.5 py-1 rounded-md text-[10px] font-bold bg-rose-600 text-white shadow-sm transition-all flex items-center gap-1";
+        if (tagApp) tagApp.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-slate-200 text-slate-500";
+        if (tagRew) tagRew.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-rose-100 text-rose-800 border border-rose-300";
+        if (reworkPath) reworkPath.classList.remove('hidden');
+        if (stage5) stage5.classList.add('opacity-40', 'grayscale');
+        if (draftBox) draftBox.classList.add('ring-2', 'ring-rose-500', 'bg-rose-50');
+      }
+    }
+
+    const streamMap = {
+      all: {
+        label: "Full Flowchart (21 Nodes Active)",
+        nodes: ['spec_p6', 'planning', 'progress_measure', 'workfront', 'site', 'ocms', 'handover', 'cad', 'dwg_mgmt', 'mat_cat', 'eng_db', 'req', 'po', 'rec', 'finance', 'expediting', 'pms', 'sms', 'cog', 'truck', 'offshore'],
+        paths: ['fp-contract_to_cad', 'fp-cad_to_planning', 'fp-p6', 'fp-actual_prog_fwd', 'fp-actual_prog_rev', 'fp-work_orders', 'fp-released_work', 'fp-dwg_to_workfront', 'fp-cad_to_dwg', 'fp-cad_to_mto', 'fp-mto_to_db', 'fp-mto_to_req', 'fp-req_to_po', 'fp-po_to_rec', 'fp-finance_to_po', 'fp-po_to_exp', 'fp-exp_to_rec', 'fp-rec_to_workfront', 'fp-rec_to_pms', 'fp-pms_to_rec', 'fp-sms_to_cog', 'fp-cog_to_truck', 'fp-truck_to_ship', 'fp-rig_to_ocms', 'fp-ocms_to_handover', 'fp-rig_to_handover', 'fp-db_to_sms']
+      },
+      eng: {
+        label: "Engineering & Planning (6 Nodes Active)",
+        nodes: ['spec_p6', 'cad', 'dwg_mgmt', 'mat_cat', 'eng_db', 'planning'],
+        paths: ['fp-contract_to_cad', 'fp-cad_to_planning', 'fp-p6', 'fp-cad_to_dwg', 'fp-cad_to_mto', 'fp-mto_to_db']
+      },
+      scm: {
+        label: "Procurement & SCM (8 Nodes Active)",
+        nodes: ['mat_cat', 'req', 'po', 'finance', 'expediting', 'rec', 'pms', 'workfront'],
+        paths: ['fp-mto_to_req', 'fp-req_to_po', 'fp-finance_to_po', 'fp-po_to_rec', 'fp-po_to_exp', 'fp-exp_to_rec', 'fp-rec_to_pms', 'fp-pms_to_rec', 'fp-rec_to_workfront']
+      },
+      site: {
+        label: "Site Construction & OCMS (8 Nodes Active)",
+        nodes: ['dwg_mgmt', 'rec', 'workfront', 'progress_measure', 'planning', 'site', 'ocms', 'handover'],
+        paths: ['fp-dwg_to_workfront', 'fp-rec_to_workfront', 'fp-work_orders', 'fp-actual_prog_fwd', 'fp-actual_prog_rev', 'fp-released_work', 'fp-rig_to_ocms', 'fp-rig_to_handover', 'fp-ocms_to_handover']
+      },
+      sms: {
+        label: "Shiploose SMS Tracking (5 Nodes Active)",
+        nodes: ['eng_db', 'sms', 'cog', 'truck', 'offshore'],
+        paths: ['fp-db_to_sms', 'fp-sms_to_cog', 'fp-cog_to_truck', 'fp-truck_to_ship']
+      }
+    };
+
+    function filterLifecycleStream(stream) {
+      const btns = ['all', 'eng', 'scm', 'site', 'sms'];
+      btns.forEach(b => {
+        const btn = document.getElementById(`flt-${b}`);
+        if (btn) {
+          if (b === stream) {
+            btn.className = "stream-flt-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white transition-all shadow-sm";
+          } else {
+            btn.className = "stream-flt-btn px-2 py-0.5 rounded font-medium text-slate-600 hover:text-slate-900 transition-all";
+          }
+        }
+      });
+
+      const activeConfig = streamMap[stream] || streamMap.all;
+      const allNodes = document.querySelectorAll('#lifecycle-svg .flow-node');
+      const allPaths = document.querySelectorAll('#lifecycle-svg .flow-path');
+
+      // Dim or highlight SVG nodes
+      allNodes.forEach(node => {
+        const nodeKey = node.getAttribute('data-node');
+        if (activeConfig.nodes.includes(nodeKey)) {
+          node.classList.remove('dimmed');
+          node.classList.add('active-step');
+        } else {
+          node.classList.add('dimmed');
+          node.classList.remove('active-step');
+        }
+      });
+
+      // Dim or highlight SVG flow paths
+      allPaths.forEach(path => {
+        const pathId = path.id;
+        if (activeConfig.paths.includes(pathId)) {
+          path.classList.remove('dimmed');
+          path.classList.add('active-step');
+        } else {
+          path.classList.add('dimmed');
+          path.classList.remove('active-step');
+        }
+      });
+
+      // Synchronize flow arrow text labels with stream visibility
+      const allLabels = document.querySelectorAll('#lifecycle-svg .flow-label');
+      allLabels.forEach(label => {
+        const pathId = label.getAttribute('data-path');
+        if (!pathId || activeConfig.paths.includes(pathId)) {
+          label.classList.remove('dimmed');
+        } else {
+          label.classList.add('dimmed');
+        }
+      });
+
+      // Update status label badge
+      const statusLabel = document.getElementById('lifecycle-filter-label');
+      if (statusLabel) {
+        statusLabel.innerText = activeConfig.label;
+      }
+    }
+
+    /* Multi-tab aware zoom controller for Page 3 diagrams */
+    function changeActiveSlide3DiagramZoom(delta) {
+      const activeView = document.querySelector('#slide-3 > [id^="s3-view-"]:not(.hidden)');
+      if (!activeView || activeView.id === 's3-view-2') return;
+      const diagram = activeView.querySelector('svg');
+      if (!diagram) return;
+
+      const currentZoom = parseFloat(diagram.style.zoom || 1);
+      const nextZoom = Math.min(1.6, Math.max(0.5, Number((currentZoom + delta).toFixed(2))));
+      diagram.style.zoom = nextZoom;
+
+      const label = document.getElementById('s3-zoom-label');
+      if (label) label.textContent = `${Math.round(nextZoom * 100)}%`;
+    }
+
+    window.onload = function() {
+      updateSlideUI();
+      selectModule('edas');
+      toggleMhbQcDecision(true);
+      switchSlide3Workflow(1);
+      filterLifecycleStream('all');
+    };
+  </script> -->
+</body>
+</html>

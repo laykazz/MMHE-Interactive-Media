@@ -1,0 +1,136 @@
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Technical Grid Pattern for Off-White Background */
+.bg-tech-grid {
+  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+}
+
+.glow-cyan {
+  box-shadow: 0 10px 25px -4px rgba(2, 132, 199, 0.2);
+}
+
+.slide-transition {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.tabular-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.phone-feature-btn {
+  border-color: #e2e8f0 !important;
+  border-width: 1px !important;
+}
+
+.flow-node, .flow-path, .flow-label {
+  transition: opacity 0.35s ease, filter 0.35s ease, stroke-width 0.25s ease;
+}
+.flow-node:hover {
+  filter: drop-shadow(0 4px 8px rgba(2, 132, 199, 0.25));
+}
+.flow-node.dimmed, .flow-path.dimmed, .flow-label.dimmed {
+  opacity: 0.14 !important;
+  filter: grayscale(95%) contrast(0.65) !important;
+}
+.flow-node.active-step {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 10px rgba(2, 132, 199, 0.45)) !important;
+}
+.flow-path.active-step {
+  opacity: 1 !important;
+  stroke: #0284c7 !important;
+  stroke-width: 2.2px !important;
+}
+.flow-connector-line {
+  stroke-dasharray: 6 4;
+  animation: dashmove 20s linear infinite;
+}
+@keyframes dashmove {
+  to { stroke-dashoffset: -100; }
+}
+
+html, body {
+  height: 100%;
+  min-height: 0 !important;
+  overflow: hidden;
+}
+
+body {
+  height: 100dvh;
+}
+
+body > main {
+  flex: 1 1 0%;
+  height: calc(100dvh - 3.5rem);
+  max-height: calc(100dvh - 3.5rem);
+  min-height: 0;
+  overflow: hidden;
+}
+
+main > div {
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.slide-transition:not(.hidden) {
+  flex: 1 1 0% !important;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#slide-2 > .grid {
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+#s3-view-1 {
+  min-height: 0;
+  overflow: hidden;
+}
+
+#s3-view-1 > div:last-child {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+#slide-3 > [id^="s3-view-"]:not(#s3-view-1) {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.s3-diagram-zoom-target {
+  transform: none;
+  transform-origin: top left;
+  transition: zoom 0.25s ease;
+}
+
+.s3-diagram-zoom-viewport {
+  overflow: auto;
+}
+
+@media (max-width: 639px) {
+  main { padding: 0.5rem; }
+}
